@@ -1,14 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class TimeBubble : MonoBehaviour 
 {
 	public float timeScaleMultiplier = 1.0f;
+	public float innerRadius = 0;
 
 	void Awake () 
 	{
 		collider2D.isTrigger = true;
+		if (innerRadius > ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y))
+		{
+			innerRadius = ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y);
+		}
+	}
+
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(this.transform.position, innerRadius);
+		Gizmos.DrawWireSphere(this.transform.position, ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y));
 	}
 	
 	void OnTriggerEnter2D(Collider2D col)
@@ -19,7 +31,7 @@ public class TimeBubble : MonoBehaviour
 
 		if (obj)
 		{
-			obj.LocalTimeScale *= timeScaleMultiplier;
+			obj.AddTimeBubble(this);
 		}
 	}
 
@@ -31,7 +43,7 @@ public class TimeBubble : MonoBehaviour
 
 		if (obj)
 		{
-			obj.LocalTimeScale /= timeScaleMultiplier;
+			obj.RemoveTimeBubble(this);
 		}
 	}
 }
