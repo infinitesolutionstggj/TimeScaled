@@ -64,4 +64,10 @@ public class Player : HistoricalComponent<PlayerHS>
 		output.rotation = transform.rotation;
 		return output;
 	}
+
+	protected override void ApplyHistoryState(PlayerHS state)
+	{
+		transform.position = state.position;
+		transform.rotation = state.rotation;
+	}
 }

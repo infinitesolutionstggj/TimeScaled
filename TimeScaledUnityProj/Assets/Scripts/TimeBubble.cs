@@ -12,8 +12,11 @@ public class TimeBubble : Bubble
 	{
 		base.Awake();
 
-		affectedObjects = new List<TimeScaledObject>();
 		innerRadiusPercent = Mathf.Clamp01(innerRadiusPercent);
+		if (timeScaleMultiplier < 1)
+			renderer.material = SlowMat;
+		else
+			renderer.material = FastMat;
 	}
 
 	void OnDestroy()
@@ -27,8 +30,8 @@ public class TimeBubble : Bubble
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
-			Destroy(this.gameObject);
+		/*if (Input.GetKeyDown(KeyCode.Space))
+			Destroy(this.gameObject);*/
 	}
 
 	protected override void OnDrawGizmos()

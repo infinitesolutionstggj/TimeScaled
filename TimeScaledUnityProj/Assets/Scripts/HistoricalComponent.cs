@@ -23,8 +23,6 @@ public abstract class HistoricalComponent<T> : TimeScaledObject
 	{
 		base.FixedUpdate();
 
-		history.AddLast(GetCurrentHistoryState());
-
 		while (history.Count > GameSettings.MaxHistoryStates)
 		{
 			if (!IsFull)
@@ -35,11 +33,23 @@ public abstract class HistoricalComponent<T> : TimeScaledObject
 
 		if (IsRewinding)
 		{
-			// TODO
+			if (history.Count <= 0)
+			{
+				if (!IsFull)
+				{
+					Destroy(gameObject);
+				}
+			}
+			else
+			{
+				ApplyHistoryState(history.Last.Value);
+				history.RemoveLast();
+			}
 		}
 		else
 		{
 			NewFixedUpdate();
+			history.AddLast(GetCurrentHistoryState());
 		}
 	}
 
@@ -54,4 +64,6 @@ public abstract class HistoricalComponent<T> : TimeScaledObject
 	}
 
 	protected abstract T GetCurrentHistoryState();
+
+	protected abstract void ApplyHistoryState(T state);
 }
