@@ -1,100 +1,78 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NetworkManager : MonoBehaviour {
+public class NetworkManager : MonoBehaviour 
+{
+	public static NetworkManager Main = null;
+	private int lastLevelPrefix = 0;
 
-	private float btnX;
-	private float btnY;
-	private float btnW;
-	private float btnH;
-
-	private string gameName = "Networking_Tutorial_ChronoTank";
-	private bool refreshing;
-	private HostData[] hostData;
-
-	public GameObject playerPrefab;
-	public Transform spawnObject;
-
-
-	// Use this for initialization
-	void Awake () 
+	void Awake()
 	{
-		btnX = Screen.width * 0.05f;
-		btnY = Screen.width * 0.05f;
-		btnW = Screen.width * 0.1f;
-		btnH = Screen.width * 0.1f;
-	}
-
-	public void StartServer()
-	{
-		Network.InitializeServer(32, 25001, !Network.HavePublicAddress());
-		MasterServer.RegisterHost(gameName, "MY AWESOME GAME BECAUSE IM AWESOME.", "This is our test server");
-	}
-
-	public void RefreshHostList()
-	{
-		MasterServer.RequestHostList(gameName);
-		refreshing = true;
-	}
-
-	public void OnMasterServerEvent(MasterServerEvent mse)
-	{
-		if(mse == MasterServerEvent.RegistrationSucceeded)
+		if (Main == null)
 		{
-			Debug.Log("Registered Server");
+			Main = this;
+			DontDestroyOnLoad(this.gameObject);
 		}
+		else
+			Destroy(this.gameObject);
 	}
 
-	void Update ()
+	void OnDestroy()
 	{
-		if(refreshing)
-			if(MasterServer.PollHostList().Length > 0)
-		{
-			refreshing = false;
-			hostData = MasterServer.PollHostList();
-		}
+		if (Main == this)
+			Main = null;
 	}
 
-	public void spawnPlayer()
+	public void SpawnPlayer(GameObject obj, Transform objTransform, int group = 0)
 	{
-		Network.Instantiate(playerPrefab, spawnObject.position, Quaternion.identity, 0);
+		Network.Instantiate(obj, objTransform.position, objTransform.rotation, group);
 	}
 	
 	public void OnServerInitialized()
 	{
 		Debug.Log("Server Initialized");
-		spawnPlayer();
+		QueueLoadLevel("TestScene");
 	}
 	
 	public void OnConnectedToServer()
 	{
-		spawnPlayer();
+		QueueLoadLevel("TestScene");
 	}
 
-	public void OnGUI()
+	public void QueueLoadLevel(string levelName)
 	{
-		if(!Network.isClient && !Network.isServer)
+		Network.RemoveRPCsInGroup(0);
+		networkView.RPC("LoadLevel", RPCMode.AllBuffered, levelName, lastLevelPrefix + 1);
+	}
+
+	[RPC]
+	public void LoadLevel(string levelName, int levelPrefix)
+	{
+		StartCoroutine(LoadLevelCoroutine(levelName, levelPrefix));
+	}
+
+	public IEnumerator LoadLevelCoroutine(string levelName, int levelPrefix)
+	{
+		lastLevelPrefix = levelPrefix;
+
+		Network.SetSendingEnabled(0, false);
+		Network.isMessageQueueRunning = false;
+		Network.SetLevelPrefix(levelPrefix);
+		Application.LoadLevel(levelName);
+		yield return null;
+		yield return null;
+
+		Network.isMessageQueueRunning = true;
+		Network.SetSendingEnabled(0, true);
+
+		foreach (GameObject go in FindObjectsOfType<GameObject>())
 		{
-			if(GUI.Button(new Rect(btnX, btnY, btnW, btnH), "Start Server"))
-			{
-				Debug.Log("Starting");
-				StartServer();
-			}
-			if(GUI.Button(new Rect(btnX, btnY * 1.2f + btnH, btnW, btnH), "Refresh Hosts"))
-			{
-				Debug.Log("Refreshing");
-				RefreshHostList();
-			}
-			if(hostData != null)
-			{
-				for(int i = 0; i < hostData.Length; i++)
-				{
-					if(GUI.Button(new Rect(btnX * 1.5f + btnW, btnY * 1.2f + (btnH * i), btnW * 3f, btnH), hostData[i].gameName))
-					{
-						Network.Connect(hostData[i]);
-					}
-				}
-			}
+			go.SendMessage("OnNetworkLoadedLevel", SendMessageOptions.DontRequireReceiver);
 		}
+	}
+
+	void OnDisconnectedFromServer()
+	{
+
 	}
 }
