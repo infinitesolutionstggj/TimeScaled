@@ -4,7 +4,7 @@ using System.Collections;
 public static class GameSettings
 {
 	public const float MAX_TIME_SCALE = 10.0f;
-	public const float MIN_TIME_SCALE = -10.0f;
+	public const float MIN_TIME_SCALE = 0f;
 	public static bool IsPaused { get { return Time.timeScale == 0; } }
 
 	public const float CAMERA_PAN_SPEED = 7.5f;

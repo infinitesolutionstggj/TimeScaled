@@ -20,7 +20,6 @@ public class TimeScaledObject : MonoBehaviour
 		if (GameSettings.IsPaused)
 			return;
 
-		LocalTimeScale = Mathf.Clamp(LocalTimeScale, GameSettings.MIN_TIME_SCALE, GameSettings.MAX_TIME_SCALE);
 		if (affectingTimeBubbles.Count == 0 && LocalTimeScale != 1.0f)
 		{
 			LocalTimeScale = 1.0f;
@@ -29,6 +28,7 @@ public class TimeScaledObject : MonoBehaviour
 		{
 			LocalTimeScale = CalculateTimeScale();
 		}
+		LocalTimeScale = Mathf.Clamp(LocalTimeScale, GameSettings.MIN_TIME_SCALE, GameSettings.MAX_TIME_SCALE);
 	}
 
 	protected virtual void LateUpdate()
@@ -60,6 +60,13 @@ public class TimeScaledObject : MonoBehaviour
 	protected float CalculateTimeScale()
 	{
 		// Add timeScale buggery here
-		return 1.0f;
+		float output = 1.0f;
+
+		foreach (TimeBubble tb in affectingTimeBubbles)
+		{
+			output *= tb.GetTimeScaleForObject(gameObject);
+		}
+
+		return output;
 	}
 }
