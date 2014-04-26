@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class TimeScaledObject : MonoBehaviour 
+public class TimeScaledObject : MonoBehaviour
 {
 	public float initialTimeScale = 1.0f;
 	public float LocalTimeScale { get; set; }

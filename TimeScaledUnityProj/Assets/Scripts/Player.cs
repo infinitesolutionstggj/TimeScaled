@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : TimeScaledObject
+public class PlayerHS
+{
+	public Vector3 position;
+	public Quaternion rotation;
+}
+
+public class Player : HistoricalComponent<PlayerHS>
 {
 	public static Player Main = null;
 	public float speed = 5.0f;
@@ -29,21 +35,17 @@ public class Player : TimeScaledObject
 		}
 	}
 	
-	protected override void Update () 
-	{
-		base.Update();
-
-		HandleMovement();
-	}
 
 	protected override void LateUpdate()
 	{
 		base.LateUpdate();
 	}
 
-	protected override void FixedUpdate()
+	protected override void NewFixedUpdate()
 	{
-		base.FixedUpdate();
+		base.NewFixedUpdate();
+
+		HandleMovement();
 	}
 
 	void HandleMovement()
@@ -52,6 +54,14 @@ public class Player : TimeScaledObject
 		moveVec.x = Input.GetAxis("Horizontal");
 		moveVec.y = Input.GetAxis("Vertical");
 
-		transform.Translate(moveVec * speed * Time.deltaTime * LocalTimeScale);
+		transform.Translate(moveVec * speed * Time.fixedDeltaTime * LocalTimeScale);
+	}
+
+	protected override PlayerHS GetCurrentHistoryState()
+	{
+		PlayerHS output = new PlayerHS();
+		output.position = transform.position;
+		output.rotation = transform.rotation;
+		return output;
 	}
 }

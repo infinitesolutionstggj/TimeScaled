@@ -9,7 +9,7 @@ public class TimeBubble : MonoBehaviour
 	public float OuterRadius { get { return ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y); } }
 	public float InnerRadius { get { return OuterRadius * innerRadiusPercent; } }
 
-	void Awake () 
+	void Awake ()
 	{
 		collider2D.isTrigger = true;
 		innerRadiusPercent = Mathf.Clamp01(innerRadiusPercent);
