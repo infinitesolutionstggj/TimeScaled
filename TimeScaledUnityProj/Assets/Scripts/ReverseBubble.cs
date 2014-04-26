@@ -7,10 +7,15 @@ public class ReverseBubble : Bubble
 	{
 		base.Awake();
 
+		renderer.material = ReverseMat;
+	}
+
+	protected override void Start()
+	{
 		if (lifeSpan <= 0 || lifeSpan > 10f)
 			lifeSpan = 10f;
 
-		renderer.material = ReverseMat;
+		base.Start();
 	}
 
 	void OnDestroy()
