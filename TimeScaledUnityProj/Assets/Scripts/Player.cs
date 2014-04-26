@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XboxCtrlrInput;
 
 public class PlayerHS
 {
@@ -16,6 +17,8 @@ public class PlayerHS
 
 public class Player : HistoricalComponent<PlayerHS>
 {
+	public int playerNumber;
+
 	public float linearDrag;
 	public float linearAcceleration;
 	public float maxTurretSpeed;
@@ -64,15 +67,16 @@ public class Player : HistoricalComponent<PlayerHS>
 		base.NewFixedUpdate();
 
 		currentSpeed = Mathf.Lerp(currentSpeed, 0, linearDrag * LocalFixedDeltaTime);
-		Thrust(Input.GetAxis("Vertical"));
-		RotateTurretTo(turretAngle + 90);
+		Thrust(XCI.GetAxis(XboxAxis.RightTrigger, playerNumber) - XCI.GetAxis(XboxAxis.LeftTrigger, playerNumber));
+		if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickX, playerNumber)) > 0.1 || Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickY, playerNumber)) > 0.1)
+			RotateTurretTo(MathLib.Atand2(XCI.GetAxis(XboxAxis.RightStickY, playerNumber), XCI.GetAxis(XboxAxis.RightStickX, playerNumber)));
 
-		bodyAngle -= maxTurnSpeed * currentSpeed * Input.GetAxis("Horizontal") * LocalFixedDeltaTime;
+		bodyAngle -= maxTurnSpeed * currentSpeed * XCI.GetAxis(XboxAxis.LeftStickX, playerNumber) * LocalFixedDeltaTime;
 		transform.position += new Vector2(MathLib.Cosd(bodyAngle), MathLib.Sind(bodyAngle)).ToVector3() * currentSpeed * LocalFixedDeltaTime;
 		transform.rotation = Quaternion.Euler(0, 0, bodyAngle);
 		transform.GetChild(0).rotation = Quaternion.Euler(0, 0, turretAngle);
 
-		if (Input.GetButtonDown("Fire1"))
+		if (XCI.GetButtonDown(XboxButton.A, playerNumber))
 			ShootBullet();
 	}
 

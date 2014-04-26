@@ -46,6 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Abilities\CryoFreeze.cs" />
+     <Compile Include="Assets\Scripts\Abilities\SpecialAbility.cs" />
+     <Compile Include="Assets\Scripts\Abilities\TestAbilityAA.cs" />
+     <Compile Include="Assets\Scripts\Abilities\TestAbilityBB.cs" />
      <Compile Include="Assets\Scripts\Bubble.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CameraExt.cs" />
@@ -58,6 +62,8 @@
      <Compile Include="Assets\Scripts\PointOfInterest.cs" />
      <Compile Include="Assets\Scripts\RectangleExt.cs" />
      <Compile Include="Assets\Scripts\ReverseBubble.cs" />
+     <Compile Include="Assets\Scripts\Tanks\BlinkTank.cs" />
+     <Compile Include="Assets\Scripts\Tanks\CryoTank.cs" />
      <Compile Include="Assets\Scripts\TimeBubble.cs" />
      <Compile Include="Assets\Scripts\TimeBubbleSpawner.cs" />
      <Compile Include="Assets\Scripts\TimeScaledObject.cs" />
