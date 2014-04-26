@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
 	
 	void Update()
 	{
-
 	}
 
 	void LateUpdate () 
@@ -29,12 +28,12 @@ public class GameManager : MonoBehaviour
 		moveVec = Vector3.SmoothDamp(Camera.main.transform.position, playerPos, ref velocity, smoothTime);
 		moveVec.z = Camera.main.transform.position.z;
 
-		if (Camera.main.WorldToViewportPoint(playerPos).x > GameSettings.MIN_SCREEN_BOUNDS && Camera.main.WorldToViewportPoint(playerPos).x < GameSettings.MAX_SCREEN_BOUNDS)
+		if (Camera.main.WorldToViewportPoint(playerPos).x > GameSettings.MIN_SCREEN_BUFFER && Camera.main.WorldToViewportPoint(playerPos).x < GameSettings.MAX_SCREEN_BUFFER)
 		{
 			moveVec.x = Camera.main.transform.position.x;
 		}
 
-		if (Camera.main.WorldToViewportPoint(playerPos).y > GameSettings.MIN_SCREEN_BOUNDS && Camera.main.WorldToViewportPoint(playerPos).y < GameSettings.MAX_SCREEN_BOUNDS)
+		if (Camera.main.WorldToViewportPoint(playerPos).y > GameSettings.MIN_SCREEN_BUFFER && Camera.main.WorldToViewportPoint(playerPos).y < GameSettings.MAX_SCREEN_BUFFER)
 		{
 			moveVec.y = Camera.main.transform.position.y;
 		}

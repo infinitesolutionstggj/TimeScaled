@@ -1,30 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-[RequireComponent(typeof(CircleCollider2D))]
-public class TimeBubble : MonoBehaviour 
+public class TimeBubble : Bubble 
 {
 	public float timeScaleMultiplier = 1.0f;
 	public float innerRadiusPercent = 0.5f;
-	public float OuterRadius { get { return ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y); } }
 	public float InnerRadius { get { return OuterRadius * innerRadiusPercent; } }
 
-	void Awake ()
+	protected override void Awake ()
 	{
-		collider2D.isTrigger = true;
+		base.Awake();
+
+		affectedObjects = new List<TimeScaledObject>();
 		innerRadiusPercent = Mathf.Clamp01(innerRadiusPercent);
 	}
 
-	void OnDrawGizmos()
+	void OnDestroy()
 	{
-		Gizmos.color = Color.green;
+		foreach (TimeScaledObject obj in affectedObjects)
+		{
+			obj.RemoveTimeBubble(this);
+		}
+		affectedObjects.Clear();
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+			Destroy(this.gameObject);
+	}
+
+	protected override void OnDrawGizmos()
+	{
+		base.OnDrawGizmos();
+
 		Gizmos.DrawWireSphere(this.transform.position, InnerRadius);
-		Gizmos.DrawWireSphere(this.transform.position, OuterRadius);
 	}
 	
-	void OnTriggerEnter2D(Collider2D col)
+	protected override void OnTriggerEnter2D(Collider2D col)
 	{
-		Debug.Log("Trigger Entered");
+		base.OnTriggerEnter2D(col);
 
 		TimeScaledObject obj = col.gameObject.GetComponent<TimeScaledObject>();
 
@@ -34,9 +50,9 @@ public class TimeBubble : MonoBehaviour
 		}
 	}
 
-	void OnTriggerExit2D(Collider2D col)
+	protected override void OnTriggerExit2D(Collider2D col)
 	{
-		Debug.Log("Trigger Exited");
+		base.OnTriggerExit2D(col);
 
 		TimeScaledObject obj = col.gameObject.GetComponent<TimeScaledObject>();
 

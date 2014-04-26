@@ -6,7 +6,10 @@ public abstract class HistoricalComponent<T> : TimeScaledObject
 {
 	public LinkedList<T> history;
 	public bool IsFull { get; private set; }
-	public bool isRewinding;
+	public bool IsRewinding
+	{
+		get { return affectingReverseBubbles.Count > 0; }
+	}
 
 	protected override void Awake()
 	{
@@ -30,7 +33,7 @@ public abstract class HistoricalComponent<T> : TimeScaledObject
 			history.RemoveFirst();
 		}
 
-		if (isRewinding)
+		if (IsRewinding)
 		{
 			// TODO
 		}

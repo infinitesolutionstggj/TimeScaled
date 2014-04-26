@@ -6,11 +6,13 @@ public class TimeScaledObject : MonoBehaviour
 	public float initialTimeScale = 1.0f;
 	public float LocalTimeScale { get; set; }
 	protected List<TimeBubble> affectingTimeBubbles;
+	protected List<ReverseBubble> affectingReverseBubbles;
 
 	// Use this for initialization
 	protected virtual void Awake () 
 	{
 		affectingTimeBubbles = new List<TimeBubble>();
+		affectingReverseBubbles = new List<ReverseBubble>();
 		LocalTimeScale = initialTimeScale;
 	}
 	
@@ -55,6 +57,22 @@ public class TimeScaledObject : MonoBehaviour
 	public void RemoveTimeBubble(TimeBubble timeBubble)
 	{
 		affectingTimeBubbles.Remove(timeBubble);
+	}
+
+	public void AddReverseBubble(ReverseBubble reverseBubble)
+	{
+		foreach (ReverseBubble rb in affectingReverseBubbles)
+		{
+			if (rb == reverseBubble)
+				return;
+		}
+
+		affectingReverseBubbles.Add(reverseBubble);
+	}
+
+	public void RemoveReverseBubble(ReverseBubble reverseBubble)
+	{
+		affectingReverseBubbles.Remove(reverseBubble);
 	}
 
 	protected float CalculateTimeScale()
