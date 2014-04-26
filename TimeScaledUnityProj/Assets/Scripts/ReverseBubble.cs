@@ -7,6 +7,9 @@ public class ReverseBubble : Bubble
 	{
 		base.Awake();
 
+		if (lifeSpan <= 0 || lifeSpan > 10f)
+			lifeSpan = 10f;
+
 		renderer.material = ReverseMat;
 	}
 

@@ -13,13 +13,14 @@ public class GameManager : MonoBehaviour
 	
 	void Update()
 	{
-		/*if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			var tempObj = Instantiate(testPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+			tempObj.GetComponent<ReverseBubble>().lifeSpan = 3f;
 			Vector3 objScale = Vector3.one * 30;
 			objScale.z = 10f;
 			tempObj.transform.localScale = objScale;
-		}*/
+		}
 	}
 
 	void LateUpdate () 

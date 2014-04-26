@@ -10,12 +10,19 @@ public class Bubble : MonoBehaviour
 	public static Material ReverseMat = Resources.Load<Material>("ReverseBubbleMat");
 
 	public float OuterRadius { get { return ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y); } }
-	public List<TimeScaledObject> affectedObjects;
+	protected List<TimeScaledObject> affectedObjects;
+	public float lifeSpan = 0f;
 
 	protected virtual void Awake()
 	{
 		collider2D.isTrigger = true;
 		affectedObjects = new List<TimeScaledObject>();
+	}
+
+	protected virtual void Start()
+	{
+		if (lifeSpan > 0)
+			Destroy(this.gameObject, lifeSpan);
 	}
 
 	protected virtual void OnTriggerEnter2D(Collider2D col)
