@@ -4,7 +4,7 @@ using System.Collections;
 public static class GameSettings
 {
 	public const float MAX_TIME_SCALE = 10.0f;	// The maximum time scale at which a TimeScaledObject can progress
-	public const float MIN_TIME_SCALE = 0f;		// Ditto minimum
+	public const float MIN_TIME_SCALE = 0.1f;		// Ditto minimum
 	public const float FIXED_DELTA_TIME = 0.02f;	// Constant for adjusting Time.fixedDeltaTime
 	public static bool IsPaused { get { return Time.timeScale == 0; } }	// Is the game currently paused?
 
