@@ -5,6 +5,10 @@ public class TimeScaledObject : MonoBehaviour
 {
 	public float initialTimeScale = 1.0f;
 	public float LocalTimeScale { get; set; }
+	public float LocalFixedDeltaTime
+	{
+		get { return Time.fixedDeltaTime * LocalTimeScale; }
+	}
 	protected List<TimeBubble> affectingTimeBubbles;
 	protected List<ReverseBubble> affectingReverseBubbles;
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public static class Vector2Ext
 {
-	public static Vector3 ToVector3(this Vector2 vec, float z)
+	public static Vector3 ToVector3(this Vector2 vec, float z = 0)
 	{
 		return new Vector3(vec.x, vec.y, z);
 	}

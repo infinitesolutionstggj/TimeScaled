@@ -5,9 +5,9 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CircleCollider2D))]
 public class Bubble : MonoBehaviour
 {
-	public static Material SlowMat = Resources.Load<Material>("SlowBubbleMat");
-	public static Material FastMat = Resources.Load<Material>("FastBubbleMat");
-	public static Material ReverseMat = Resources.Load<Material>("ReverseBubbleMat");
+	public static Material SlowMat;
+	public static Material FastMat;
+	public static Material ReverseMat;
 
 	public float OuterRadius { get { return ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y); } }
 	protected List<TimeScaledObject> affectedObjects;
@@ -15,6 +15,12 @@ public class Bubble : MonoBehaviour
 
 	protected virtual void Awake()
 	{
+		if (SlowMat == null || FastMat == null || ReverseMat == null)
+		{
+			SlowMat = Resources.Load<Material>("SlowBubbleMat");
+			FastMat = Resources.Load<Material>("FastBubbleMat");
+			ReverseMat = Resources.Load<Material>("ReverseBubbleMat");
+		}
 		collider2D.isTrigger = true;
 		affectedObjects = new List<TimeScaledObject>();
 	}
