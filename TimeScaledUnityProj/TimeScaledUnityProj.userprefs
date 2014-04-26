@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\InfiniteSolutions\TimeScaled\TimeScaledUnityProj\Assets\Scripts\Menus\TankSelectionMenu.cs">
+    <Files>
+      <File FileName="..\..\..\..\InfiniteSolutions\TimeScaled\TimeScaledUnityProj\Assets\Scripts\Menus\TankSelector.cs" Line="18" Column="27" />
+      <File FileName="..\..\..\..\InfiniteSolutions\TimeScaled\TimeScaledUnityProj\Assets\Scripts\GameSettings.cs" Line="24" Column="4" />
+      <File FileName="..\..\..\..\InfiniteSolutions\TimeScaled\TimeScaledUnityProj\Assets\Scripts\Menus\TankSelectionMenu.cs" Line="39" Column="41" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
