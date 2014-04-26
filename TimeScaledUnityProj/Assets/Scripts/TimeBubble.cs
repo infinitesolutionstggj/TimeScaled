@@ -5,7 +5,7 @@ using System.Collections;
 public class TimeBubble : MonoBehaviour 
 {
 	public float timeScaleMultiplier = 1.0f;
-	public float innerRadiusPercent = 0;
+	public float innerRadiusPercent = 0.5f;
 	public float OuterRadius { get { return ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y); } }
 	public float InnerRadius { get { return OuterRadius * innerRadiusPercent; } }
 
