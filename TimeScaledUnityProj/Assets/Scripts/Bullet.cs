@@ -41,7 +41,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 	{
 		CheckLoadPrefab();
 
-		Bullet output = Network.Instantiate(prefab, position, Quaternion.Euler(0, 0, angle), 0) as Bullet;
+		Bullet output = NetworkManager.SpawnObject(prefab, position, Quaternion.Euler(0, 0, angle)) as Bullet;
 		output.speed = speed;
 		output.angle = angle;
 		return output;

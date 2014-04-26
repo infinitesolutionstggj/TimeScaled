@@ -44,29 +44,13 @@ public class MainMenuScript : MonoBehaviour
 	void Update()
 	{
 		if (refreshing)
+		{
 			if (MasterServer.PollHostList().Length > 0)
 			{
 				refreshing = false;
 				hostData = MasterServer.PollHostList();
 			}
-		//hostData = MasterServer.PollHostList();
-		//if (hostData != null)
-		//{
-		//	Debug.Log("Host Isn't Null!");
-		//	if (hostData.Length > 0)
-		//	{
-		//		Debug.Log(hostData[0].connectedPlayers);
-		//		if (hostData[0].connectedPlayers == 1)
-		//		{
-		//			NetworkManager.Main.QueueLoadLevel("TestScene");
-		//		}
-		//	}
-		//}
-	}
-
-	public void OnConnectedToServer()
-	{
-		NetworkManager.Main.QueueLoadLevel("TestScene");
+		}
 	}
 
 	public void OnGUI()

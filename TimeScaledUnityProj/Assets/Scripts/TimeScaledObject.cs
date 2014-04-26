@@ -15,20 +15,26 @@ public class TimeScaledObject : MonoBehaviour
 	// Use this for initialization
 	protected virtual void Awake () 
 	{
-		if (!networkView.isMine)
-		{
-			enabled = false;
-		}
-
 		affectingTimeBubbles = new List<TimeBubble>();
 		affectingReverseBubbles = new List<ReverseBubble>();
 		LocalTimeScale = initialTimeScale;
+		
+	}
+
+	protected virtual void Start()
+	{
 		
 	}
 	
 	// Update is called once per frame
 	protected virtual void Update () 
 	{
+		if (!networkView.isMine)
+		{
+			enabled = false;
+			return;
+		}
+
 		if (GameSettings.IsPaused)
 			return;
 

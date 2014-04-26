@@ -13,6 +13,8 @@ public class PlayerHS
 
 public class Player : HistoricalComponent<PlayerHS>
 {
+	public static Player Main = null;
+
 	public float linearDrag;
 	public float linearAcceleration;
 	public float maxTurretSpeed;
@@ -40,6 +42,7 @@ public class Player : HistoricalComponent<PlayerHS>
 
 	void OnDestroy()
 	{
+		
 	}
 	
 	protected override void NewFixedUpdate()

@@ -5,6 +5,7 @@ public class NetworkManager : MonoBehaviour
 {
 	public static NetworkManager Main = null;
 	private int lastLevelPrefix = 0;
+	public GameObject playerPrefab;
 
 	void Awake()
 	{
@@ -23,9 +24,9 @@ public class NetworkManager : MonoBehaviour
 			Main = null;
 	}
 
-	public void SpawnObject(GameObject obj, Vector3 position, Quaternion rotation, int group = 0)
+	public static Object SpawnObject(Object obj, Vector3 position, Quaternion rotation, int group = 0)
 	{
-		Network.Instantiate(obj, position, rotation, group);
+		return Network.Instantiate(obj, position, rotation, group);
 	}
 	
 	public void OnServerInitialized()
@@ -37,11 +38,13 @@ public class NetworkManager : MonoBehaviour
 	public void OnConnectedToServer()
 	{
 		QueueLoadLevel("TestScene");
+		NetworkManager.SpawnObject(playerPrefab, Vector3.zero, Quaternion.identity);
 	}
 
 	public void QueueLoadLevel(string levelName)
 	{
 		Network.RemoveRPCsInGroup(0);
+		Network.RemoveRPCsInGroup(1);
 		networkView.RPC("LoadLevel", RPCMode.AllBuffered, levelName, lastLevelPrefix + 1);
 	}
 
