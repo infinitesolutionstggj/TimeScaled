@@ -23,7 +23,7 @@ public class NetworkManager : MonoBehaviour
 			Main = null;
 	}
 
-	public void SpawnPlayer(GameObject obj, Transform objTransform, int group = 0)
+	public void SpawnObject(GameObject obj, Transform objTransform, int group = 0)
 	{
 		Network.Instantiate(obj, objTransform.position, objTransform.rotation, group);
 	}
