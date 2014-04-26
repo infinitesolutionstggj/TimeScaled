@@ -29,12 +29,6 @@ public class TimeScaledObject : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update () 
 	{
-		if (!networkView.isMine)
-		{
-			enabled = false;
-			return;
-		}
-
 		if (GameSettings.IsPaused)
 			return;
 
