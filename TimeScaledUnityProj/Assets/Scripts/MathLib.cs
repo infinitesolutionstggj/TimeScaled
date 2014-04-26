@@ -33,4 +33,9 @@ public static class MathLib
 	{
 		return Mathf.Atan2(y, x) * Mathf.Rad2Deg;
 	}
+
+	public static Vector2 FromPolar(float magnitude, float angle)
+	{
+		return new Vector2(Cosd(angle), Sind(angle)) * magnitude;
+	}
 }
