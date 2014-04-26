@@ -13,7 +13,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 
 	public float angle;
 	public float speed;
-	float age;
+	public float Age { get; set; }
 
 	public Vector3 Velocity
 	{
@@ -51,7 +51,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 	{
 		base.Awake();
 
-		age = 0;
+		Age = 0;
 	}
 
 	protected override void NewFixedUpdate()
@@ -59,9 +59,9 @@ public class Bullet : HistoricalComponent<BulletHS>
 		base.NewFixedUpdate();
 
 		transform.position += Velocity * LocalFixedDeltaTime;
-		age += LocalFixedDeltaTime;
+		Age += LocalFixedDeltaTime;
 
-		if (age >= LifeTime)
+		if (Age >= LifeTime)
 			Destroy(gameObject);
 	}
 
@@ -69,13 +69,13 @@ public class Bullet : HistoricalComponent<BulletHS>
 	{
 		BulletHS output = new BulletHS();
 		output.position = transform.position;
-		output.age = age;
+		output.age = Age;
 		return output;
 	}
 
 	protected override void ApplyHistoryState(BulletHS state)
 	{
 		transform.position = state.position;
-		age = state.age;
+		Age = state.age;
 	}
 }

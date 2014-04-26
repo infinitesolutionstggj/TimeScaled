@@ -38,4 +38,16 @@ public static class MathLib
 	{
 		return new Vector2(Cosd(angle), Sind(angle)) * magnitude;
 	}
+
+	private static float SweetSpotAccuracyHelper(float t)
+	{
+		if (t <= 1)
+			return (1 - Mathf.Cos(t * Mathf.PI)) / 2;
+		else
+			return Mathf.Pow(Mathf.Sin(1 / (t - 1 + 2 / Mathf.PI)), 3);
+	}
+	public static float SweetSpotAccuracy(float sensitivity, float t, float sweetSpot)
+	{
+		return Mathf.Pow(SweetSpotAccuracyHelper(t / sweetSpot), sensitivity);
+	}
 }
