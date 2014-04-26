@@ -9,8 +9,7 @@ public class BulletHS
 
 public class Bullet : HistoricalComponent<BulletHS>
 {
-	public const float LifeTime = 5;
-
+	public float lifeTime;
 	public float angle;
 	public float speed;
 	public float Age { get; set; }
@@ -37,13 +36,14 @@ public class Bullet : HistoricalComponent<BulletHS>
 			prefab = Resources.Load<GameObject>("Bullet").GetComponent<Bullet>();
 	}
 
-	public static Bullet Spawn(Vector3 position, float angle, float speed)
+	public static Bullet Spawn(Vector3 position, float angle, float speed, float lifeTime)
 	{
 		CheckLoadPrefab();
 
 		Bullet output = Instantiate(prefab, position, Quaternion.Euler(0, 0, angle)) as Bullet;
 		output.speed = speed;
 		output.angle = angle;
+		output.lifeTime = lifeTime;
 		return output;
 	}
 
@@ -61,7 +61,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 		transform.position += Velocity * LocalFixedDeltaTime;
 		Age += LocalFixedDeltaTime;
 
-		if (Age >= LifeTime)
+		if (lifeTime > 0 && Age >= lifeTime)
 			Destroy(gameObject);
 	}
 

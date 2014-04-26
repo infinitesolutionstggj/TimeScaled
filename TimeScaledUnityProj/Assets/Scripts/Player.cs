@@ -9,12 +9,13 @@ public class PlayerHS
 	public float bodyAngle;
 	public float turretAngle;
 	public Quaternion turretRotation;
+	public SpecialAbility specialA;
+	public SpecialAbility specialB;
+	public SpecialAbility specialC;
 }
 
 public class Player : HistoricalComponent<PlayerHS>
 {
-	public static Player Main = null;
-
 	public float linearDrag;
 	public float linearAcceleration;
 	public float maxTurretSpeed;
@@ -25,6 +26,19 @@ public class Player : HistoricalComponent<PlayerHS>
 	private float currentSpeed;
 	private float bodyAngle;
 	private float turretAngle;
+
+	public float sweetSpotAge;
+	public float sweetSpotSensitivity;
+	public float minSize;
+	public float maxSize;
+	public float minInnerRadiusPercent;
+	public float maxInnerRadiusPercent;
+	public float minTimeScale;
+	public float maxTimeScale;
+
+	public SpecialAbility specialA;
+	public SpecialAbility specialB;
+	public SpecialAbility specialC;
 
 	public float Radius
 	{
@@ -76,7 +90,7 @@ public class Player : HistoricalComponent<PlayerHS>
 	protected void ShootBullet()
 	{
 		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, turretAngle).ToVector3(),
-			turretAngle, shotSpeed);
+			turretAngle, shotSpeed, 2);
 	}
 
 	protected override PlayerHS GetCurrentHistoryState()

@@ -8,7 +8,7 @@ public class TimeBubbleSpawner : Bullet
 	public static void CheckLoadPrefab()
 	{
 		if (prefab == null)
-			prefab = Resources.Load<GameObject>("TimeBubble").GetComponent<TimeBubble>();
+			prefab = Resources.Load<TimeBubble>("TimeBubble");
 	}
 
 	public bool isSlowBubble;
@@ -46,6 +46,7 @@ public class TimeBubbleSpawner : Bullet
 
 	public void Detonate()
 	{
+		CheckLoadPrefab();
 
 		float quality = Quality;
 

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour 
+public class GameManager : MonoBehaviour
 {
 	public GameObject testPrefab;
+	public GameObject detonator;
 	public GameObject playerPrefab;
 
 	void Awake()
@@ -31,5 +32,7 @@ public class GameManager : MonoBehaviour
 			objScale.z = 10f;
 			tempObj.transform.localScale = objScale;
 		}
+		if (Input.GetKeyDown(KeyCode.Return))
+			detonator.GetComponent<TimeBubbleSpawner>().Detonate();
 	}
 }
