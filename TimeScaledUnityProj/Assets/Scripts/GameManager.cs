@@ -4,11 +4,12 @@ using System.Collections;
 public class GameManager : MonoBehaviour 
 {
 	public GameObject testPrefab;
+	public GameObject playerPrefab;
 
 	// Use this for initialization
 	void Start () 
 	{
-	
+		NetworkManager.Main.SpawnObject(playerPrefab, Vector3.zero, Quaternion.identity);
 	}
 	
 	void Update()

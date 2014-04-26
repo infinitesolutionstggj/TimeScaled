@@ -23,9 +23,9 @@ public class NetworkManager : MonoBehaviour
 			Main = null;
 	}
 
-	public void SpawnObject(GameObject obj, Transform objTransform, int group = 0)
+	public void SpawnObject(GameObject obj, Vector3 position, Quaternion rotation, int group = 0)
 	{
-		Network.Instantiate(obj, objTransform.position, objTransform.rotation, group);
+		Network.Instantiate(obj, position, rotation, group);
 	}
 	
 	public void OnServerInitialized()
