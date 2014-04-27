@@ -54,6 +54,8 @@
      <Compile Include="Assets\Scripts\CameraExt.cs" />
      <Compile Include="Assets\Scripts\Eliminator.cs" />
      <Compile Include="Assets\Scripts\ExtraDamageMarker.cs" />
+     <Compile Include="Assets\Scripts\FreezeMissile.cs" />
+     <Compile Include="Assets\Scripts\Frozen.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GameSettings.cs" />

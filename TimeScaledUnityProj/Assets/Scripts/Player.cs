@@ -79,6 +79,9 @@ public class Player : HistoricalComponent<PlayerHS>
 	{
 		get
 		{
+			if (IsFrozen)
+				return 0;
+
 			if (tankSpecial is Prejudice && (tankSpecial as Prejudice).Stealth)
 				return Time.fixedDeltaTime;
 
@@ -94,6 +97,27 @@ public class Player : HistoricalComponent<PlayerHS>
 
 			return base.IsRewinding;
 		}
+	}
+
+	public bool IsFrozen
+	{
+		get
+		{
+			Frozen f = gameObject.GetComponent<Frozen>();
+
+			return f != null && f.enabled;
+		}
+	}
+
+	public void FreezeFor(float time)
+	{
+		Frozen f = gameObject.GetComponent<Frozen>();
+
+		if (f == null)
+			f = gameObject.AddComponent<Frozen>();
+
+		f.thawTime = time;
+		f.enabled = true;
 	}
 
 	// Use this for initialization
@@ -114,21 +138,18 @@ public class Player : HistoricalComponent<PlayerHS>
 		base.NewFixedUpdate();
 
 		// Apply damage to player if in time bubbles
-		if (!GameSettings.DebugInvincible)
+		if (AffectingTimeBubbles.Count > 0)
 		{
-			if (AffectingTimeBubbles.Count > 0)
+			ApplyDamage(GameSettings.BUBBLE_DAMAGE_PER_SECOND * Mathf.Min(AffectingTimeBubbles.Count, GameSettings.MAX_DAMAGING_BUBBLES) * Time.fixedDeltaTime);
+		}
+		// or heal the player if not in a time bubble
+		else
+		{
+			if (PlayerHealth < maxPlayerHealth)
 			{
-				PlayerHealth -= GameSettings.BUBBLE_DAMAGE_PER_SECOND * Mathf.Min(AffectingTimeBubbles.Count, GameSettings.MAX_DAMAGING_BUBBLES) * Time.fixedDeltaTime;
-			}
-			// or heal the player if not in a time bubble
-			else
-			{
-				if (PlayerHealth < maxPlayerHealth)
-				{
-					PlayerHealth += GameSettings.HEALTH_REGEN_PER_SECOND * Time.fixedDeltaTime;
-					if (PlayerHealth > maxPlayerHealth)
-						PlayerHealth = maxPlayerHealth;
-				}
+				PlayerHealth += GameSettings.HEALTH_REGEN_PER_SECOND * Time.fixedDeltaTime;
+				if (PlayerHealth > maxPlayerHealth)
+					PlayerHealth = maxPlayerHealth;
 			}
 		}
 		// Check to see if the player is dead
@@ -144,7 +165,7 @@ public class Player : HistoricalComponent<PlayerHS>
 			bodyAngle = MathLib.Atand2(transform.right.y, transform.right.x);
 			knockbackTimer -= LocalFixedDeltaTime;
 		}
-		else
+		else if (!IsFrozen)
 		{
 			currentSpeed = Mathf.Lerp(currentSpeed, 0, linearDrag * LocalFixedDeltaTime);
 			Thrust(XCI.GetAxis(XboxAxis.RightTrigger, playerNumber) - XCI.GetAxis(XboxAxis.LeftTrigger, playerNumber));
@@ -220,14 +241,20 @@ public class Player : HistoricalComponent<PlayerHS>
 
 	public void ApplyDamage(float damage)
 	{
+		if (GameSettings.DebugInvincible)
+			return;
+
 		if (damage <= 0)
+			return;
+
+		if (IsFrozen && tankSpecial is Cryo)
 			return;
 		
 		PlayerHealth -= damage;
 
 		if (IsDead)
 		{
-			AudioManager.PlayClipByName("Player Death");
+			AudioManager.PlayClipByName("PlayerDeath");
 			Destroy(gameObject);
 		}
 	}
