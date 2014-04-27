@@ -28,12 +28,22 @@ public class Bubble : MonoBehaviour
 	protected virtual void Start()
 	{
 		if (lifeSpan > 0)
-			Destroy(this.gameObject, lifeSpan);
+			StartCoroutine(DestroyAfterSeconds(lifeSpan));
+	}
+
+	protected IEnumerator DestroyAfterSeconds(float seconds)
+	{
+		if (seconds <= 0)
+			yield break;
+
+		yield return new WaitForSeconds(seconds);
+		AudioManager.PlayClipByName("Despawn");
+		Destroy(this.gameObject);
+
 	}
 
 	protected virtual void OnDestroy()
 	{
-		AudioManager.PlayClipByName("Despawn");
 	}
 
 	protected virtual void OnTriggerEnter2D(Collider2D col)

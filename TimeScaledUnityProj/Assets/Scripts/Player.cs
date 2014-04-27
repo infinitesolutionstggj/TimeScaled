@@ -254,7 +254,7 @@ public class Player : HistoricalComponent<PlayerHS>
 
 		if (IsDead)
 		{
-			AudioManager.PlayClipByName("Player Death");
+			AudioManager.PlayClipByName("PlayerDeath");
 			Destroy(gameObject);
 		}
 	}
