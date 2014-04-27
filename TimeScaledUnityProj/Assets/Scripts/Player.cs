@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using XboxCtrlrInput;
 
 public class PlayerHS
@@ -12,10 +13,14 @@ public class PlayerHS
 	public Quaternion turretRotation;
 
 	public float coolDownA;
+	public float knockBackTimer;
+	public Vector3 knockBackVelocity;
 }
 
 public class Player : HistoricalComponent<PlayerHS>
 {
+	public static List<Player> All = new List<Player>();
+
 	public float Radius;
 
 	public int playerNumber;
@@ -96,11 +101,12 @@ public class Player : HistoricalComponent<PlayerHS>
 	{
 		base.Awake();
 		PlayerHealth = maxPlayerHealth;
+		All.Add(this);
 	}
 
 	void OnDestroy()
 	{
-		
+		All.Remove(this);
 	}
 	
 	protected override void NewFixedUpdate()
@@ -187,6 +193,9 @@ public class Player : HistoricalComponent<PlayerHS>
 
 	protected void ShootBullet()
 	{
+		if (tankSpecial is Prism && (tankSpecial as Prism).Boost)
+			return;
+
 		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, TurretAngle).ToVector3(),
 			TurretAngle, shotSpeed, 2, shotStrength);
 		CoolDownA = coolDownA;
@@ -211,6 +220,9 @@ public class Player : HistoricalComponent<PlayerHS>
 		output.bodyAngle = bodyAngle;
 		output.turretAngle = TurretAngle;
 		output.turretRotation = transform.GetChild(0).rotation;
+		output.coolDownA = coolDownA;
+		output.knockBackTimer = knockbackTimer;
+		output.knockBackVelocity = knockbackVelocity;
 		return output;
 	}
 
@@ -222,5 +234,8 @@ public class Player : HistoricalComponent<PlayerHS>
 		bodyAngle = state.bodyAngle;
 		TurretAngle = state.turretAngle;
 		transform.GetChild(0).rotation = state.turretRotation;
+		coolDownA = state.coolDownA;
+		knockbackTimer = state.knockBackTimer;
+		knockbackVelocity = state.knockBackVelocity;
 	}
 }

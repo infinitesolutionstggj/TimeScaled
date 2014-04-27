@@ -9,9 +9,15 @@ public class RegressorHS : TankSpecialHS
 public class Regressor : TankSpecial<RegressorHS>
 {
 	public ReverseBubbleDesc reverseDesc;
+	public float pulsePower;
+	public float knockBackPower;
+	public float missileSpeed;
+	public float missileLifeTime;
 
 	protected override void ExecuteSpecialX()
 	{
+		Bullet.Spawn(transform.position + MathLib.FromPolar(Player.Radius + Bullet.Radius, Player.TurretAngle).ToVector3(),
+			Player.TurretAngle, missileSpeed, missileLifeTime, knockBackPower);
 	}
 	protected override void ExecuteSpecialY()
 	{
@@ -20,6 +26,8 @@ public class Regressor : TankSpecial<RegressorHS>
 	}
 	protected override void ExecuteSpecialB()
 	{
+		foreach (var player in Player.All)
+			player.ApplyKnockback(player.transform.position - transform.position, pulsePower, GameSettings.PLAYER_KNOCKBACK_DURATION);
 	}
 
 	protected override RegressorHS GetCurrentHistoryState()
