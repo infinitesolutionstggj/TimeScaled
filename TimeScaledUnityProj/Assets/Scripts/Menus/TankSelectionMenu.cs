@@ -1,48 +1,81 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using XboxCtrlrInput;
-
 
 public class TankSelectionMenu : MonoBehaviour
 {
-	TankSelector[] playerSelectors = new TankSelector[4];
+	List<MenuObject> tankMenuObjects = new List<MenuObject>();
 
-	public static Vector3[] tankModels = new Vector3[5];
+	int[] playerSelections = new int[4];
 
-	// Use this for initialization
+	bool[] selectorCoolDowns = new bool[4];
+
+	void Awake()
+	{
+		for(int i = 0; i < playerSelections.Length; i++)
+			playerSelections[i] = 0;
+
+		for(int i = 0; i < selectorCoolDowns.Length; i++)
+			selectorCoolDowns[i] = false;
+	}
+
 	void Start () 
 	{
-		tankModels[0] = new Vector3(-3, 0, 0);
-		tankModels[1] = new Vector3( 0, 0, 0);
-		tankModels[2] = new Vector3( 3, 0, 0);
-		tankModels[3] = new Vector3(-3, 0, -3);
-		tankModels[4] = new Vector3(0, 0, -3);
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		for (int i = 1; i <= 4; i++)
+		GameObject[] foundObjects;
+		foundObjects = GameObject.FindGameObjectsWithTag("MenuObject");
+
+		for(int i = 0; i < foundObjects.Length; i++)
 		{
-			if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickX, i)) > 0.5)
+			if(foundObjects[i].GetComponent<MenuObject>() != null && foundObjects[i].activeInHierarchy)
 			{
-				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickX, i)), true);
-			}
-
-			if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickY, i)) > 0.5)
-			{
-				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickY, i)), false);
-			}
-
-			if (Mathf.Abs(XCI.GetAxis(XboxAxis.LeftStickX, i)) > 0.5)
-			{
-				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.LeftStickX, i)), true);
-			}
-
-			if (Mathf.Abs(XCI.GetAxis(XboxAxis.LeftStickY, i)) > 0.5)
-			{
-				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.LeftStickY, i)), false);
+				tankMenuObjects.Add(foundObjects[i].GetComponent<MenuObject>());
 			}
 		}
+	}
+
+	void Update ()
+	{
+		for (int i = 0; i < playerSelections.Length; i++)
+		{
+			if(!selectorCoolDowns[i])
+			{
+				if (XCI.GetAxis(XboxAxis.LeftStickX, i+1) > 0.5)
+				{
+					//playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickX, i)), true);
+					playerSelections[i]++;
+					if(playerSelections[i] >= tankMenuObjects.Count)
+						playerSelections[i] = 0;
+					else if(playerSelections[i] < 0)
+						playerSelections[i] = tankMenuObjects.Count - 1;
+
+					selectorCoolDowns[i] = true;
+					StartCoroutine(SelectionWait(i));
+					Debug.Log("Player " + i + " index: " + playerSelections[i]);
+				}
+				else if(XCI.GetAxis(XboxAxis.LeftStickX, i+1) < -0.5)
+				{
+					playerSelections[i]--;
+					if(playerSelections[i] >= tankMenuObjects.Count)
+						playerSelections[i] = 0;
+					else if(playerSelections[i] < 0)
+						playerSelections[i] = tankMenuObjects.Count - 1;
+
+					selectorCoolDowns[i] = true;
+					StartCoroutine(SelectionWait(i));
+					Debug.Log("Player " + i + " index: " + playerSelections[i]);
+				}
+			}
+		}
+	}
+
+	IEnumerator SelectionWait(int playerIndex)
+	{
+		while(Mathf.Abs(XCI.GetAxis(XboxAxis.LeftStickX, playerIndex+1)) > 0.5)
+		{
+			yield return null;
+		}
+
+		selectorCoolDowns[playerIndex] = false;
 	}
 }

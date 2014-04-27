@@ -12,7 +12,7 @@ public class TankSelector : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		location = TankSelectionMenu.tankModels[selectedTank];
+		//location = TankSelectionMenu.tankModelPositions[selectedTank];
 	}
 	
 	// Update is called once per frame
@@ -35,6 +35,6 @@ public class TankSelector : MonoBehaviour
 
 		}
 
-		location = TankSelectionMenu.tankModels[selectedTank];
+		//location = TankSelectionMenu.tankModelPositions[selectedTank];
 	}
 }

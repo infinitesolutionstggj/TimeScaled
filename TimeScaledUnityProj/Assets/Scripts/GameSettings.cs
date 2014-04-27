@@ -16,11 +16,13 @@ public static class GameSettings
 
 	public enum TankType
 	{
-		EightBit,
-		Falchion,
-		Laser,
-		Lemun,
-		MetalSlug
+		Cyro,
+		Disruptor,
+		Mammoth,
+		Prejudice,
+		Prism,
+		Regressor,
+		None
 	};
 
 	public static void Pause()
