@@ -16,10 +16,11 @@ public class LevelManager : MonoBehaviour
         if (GameManager.Main)
             playerPrefab = GameManager.Main.playerPrefab;
 
-        if (playerPrefab)
-        {
+        //if (playerPrefab)
+        //{
             for (int i = 0; i < spawns.Length; i++)
             {
+                Debug.Log("mooooo    " + GameSettings.PlayerInfos[i].TankType);
                 if (GameSettings.PlayerInfos[i].TankType != GameSettings.TankType.None)
                 {
                     switch (GameSettings.PlayerInfos[i].TankType)
@@ -56,7 +57,7 @@ public class LevelManager : MonoBehaviour
                     }
                 }
             }
-        }
+        //}
 	}
 	
 	// Update is called once per frame
