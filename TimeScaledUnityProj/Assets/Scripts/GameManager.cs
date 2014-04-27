@@ -26,11 +26,26 @@ public class GameManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			var tempObj = Instantiate(testPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-			tempObj.GetComponent<ReverseBubble>().lifeSpan = 300f;
-			Vector3 objScale = Vector3.one * 30;
-			objScale.z = 10f;
-			tempObj.transform.localScale = objScale;
+			if (AudioManager.IsPlaying)
+			{
+				AudioManager.StopBGMusic();
+			}
+			else
+			{
+				AudioManager.PlayBGMusicByIndex(0);
+			}
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			AudioManager.PlayClipByIndex(0);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			AudioManager.PlayClipByIndex(1);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			AudioManager.PlayClipByIndex(2);
 		}
 		if (Input.GetKeyDown(KeyCode.Return))
 			detonator.GetComponent<TimeBubbleSpawner>().Detonate();

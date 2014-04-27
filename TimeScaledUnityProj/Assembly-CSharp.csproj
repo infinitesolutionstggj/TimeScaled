@@ -50,6 +50,8 @@
      <Compile Include="Assets\Scripts\Abilities\SpecialAbility.cs" />
      <Compile Include="Assets\Scripts\Abilities\TestAbilityAA.cs" />
      <Compile Include="Assets\Scripts\Abilities\TestAbilityBB.cs" />
+     <Compile Include="Assets\Scripts\AudioManager.cs" />
+     <Compile Include="Assets\Scripts\BardScript.cs" />
      <Compile Include="Assets\Scripts\Bubble.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CameraExt.cs" />
@@ -72,6 +74,7 @@
      <Compile Include="Assets\Scripts\TimeScaledObject.cs" />
      <Compile Include="Assets\Scripts\Vector2Ext.cs" />
      <Compile Include="Assets\Scripts\XboxCtrlrInput.cs" />
+     <None Include="Assets\Sounds\Will&apos;s Contact Info.txt" />
  <Reference Include="XInputDotNetPure">
  <HintPath>Assets\Plugins\XInputDotNetPure.dll</HintPath>
  </Reference>
