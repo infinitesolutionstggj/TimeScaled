@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MenuSelector : MonoBehaviour
 {
-    public Vector3 Position { get; set; }
+    public bool SelectionConfirmed { get; set; }
 
     void Awake()
     {
-        Position = Vector3.zero;
+        SelectionConfirmed = false;
     }
 
 	void Start () 
@@ -17,6 +17,13 @@ public class MenuSelector : MonoBehaviour
 
 	void Update () 
 	{
-	
+        if (SelectionConfirmed)
+        {
+            GetComponentInChildren<ParticleSystem>().enableEmission = true;
+        }
+        else
+        {
+            GetComponentInChildren<ParticleSystem>().enableEmission = false;
+        }
 	}
 }
