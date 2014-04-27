@@ -9,15 +9,23 @@ public static class AudioManager
 		{
 			if(bardInstance == null)
 			{
-				bardInstance = GameObject.Find("Bard").GetComponent<BardScript>();
-				if(bardInstance == null)
+				GameObject temp = GameObject.Find("Bard");
+				if (temp)
 				{
-					bardInstance = MonoBehaviour.Instantiate(Resources.Load("Bard"), Vector3.zero, Quaternion.identity) as BardScript;
-					bardInstance.name = "Bard";
+					bardInstance = temp.GetComponent<BardScript>();
+				}
+				else
+				{
+					temp = MonoBehaviour.Instantiate(Resources.Load("Bard"), Vector3.zero, Quaternion.identity) as GameObject;
+					temp.name = "Bard";
+					bardInstance = temp.GetComponent<BardScript>();
 				}
 			}
 			return bardInstance;
-		} }
+		}
+	}
+
+	public static bool IsPlaying { get { return Bard.IsPlaying; } }
 
 	public static void PlayClipByName(string name)
 	{

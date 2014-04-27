@@ -7,6 +7,8 @@ public class BardScript : MonoBehaviour
 	public AudioClip[] soundClips;
 	public AudioClip[] bgMusic;
 
+	public bool IsPlaying { get { return audio.isPlaying; } }
+
 	void Awake () 
 	{
 		if (Main == null)
