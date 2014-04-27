@@ -16,6 +16,13 @@ public class GameManager : MonoBehaviour
 			Main = this;
 		else
 			Destroy(this.gameObject);
+
+		Time.fixedDeltaTime = GameSettings.FIXED_DELTA_TIME;
+
+		if (!AudioManager.IsPlaying)
+		{
+			AudioManager.PlayBGMusicByIndex(0);
+		}
 	}
 
 	void OnDestroy()
