@@ -41,7 +41,7 @@ public class PolarityReverser : Bullet
 	{
 		CheckLoadPrefab();
 
-		foreach (var bubble in affectingTimeBubbles)
+		foreach (var bubble in AffectingTimeBubbles)
 		{
 			bubble.timeScaleMultiplier = 1 / bubble.timeScaleMultiplier;
 			bubble.ResetMaterial();

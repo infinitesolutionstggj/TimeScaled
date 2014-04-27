@@ -9,13 +9,13 @@ public class TimeScaledObject : MonoBehaviour
 	{
 		get { return Time.fixedDeltaTime * LocalTimeScale; }
 	}
-	protected List<TimeBubble> affectingTimeBubbles;
+	public List<TimeBubble> AffectingTimeBubbles { get; private set; }
 	protected List<ReverseBubble> affectingReverseBubbles;
 
 	// Use this for initialization
 	protected virtual void Awake () 
 	{
-		affectingTimeBubbles = new List<TimeBubble>();
+		AffectingTimeBubbles = new List<TimeBubble>();
 		affectingReverseBubbles = new List<ReverseBubble>();
 		LocalTimeScale = initialTimeScale;
 	}
@@ -31,7 +31,7 @@ public class TimeScaledObject : MonoBehaviour
 		if (GameSettings.IsPaused)
 			return;
 
-		if (affectingTimeBubbles.Count == 0 && LocalTimeScale != 1.0f)
+		if (AffectingTimeBubbles.Count == 0 && LocalTimeScale != 1.0f)
 		{
 			LocalTimeScale = 1.0f;
 		}
@@ -54,18 +54,18 @@ public class TimeScaledObject : MonoBehaviour
 
 	public void AddTimeBubble(TimeBubble timeBubble)
 	{
-		foreach (TimeBubble tb in affectingTimeBubbles)
+		foreach (TimeBubble tb in AffectingTimeBubbles)
 		{
 			if (tb == timeBubble)
 				return;
 		}
 
-		affectingTimeBubbles.Add(timeBubble);
+		AffectingTimeBubbles.Add(timeBubble);
 	}
 
 	public void RemoveTimeBubble(TimeBubble timeBubble)
 	{
-		affectingTimeBubbles.Remove(timeBubble);
+		AffectingTimeBubbles.Remove(timeBubble);
 	}
 
 	public void AddReverseBubble(ReverseBubble reverseBubble)
@@ -89,7 +89,7 @@ public class TimeScaledObject : MonoBehaviour
 		// Add timeScale buggery here
 		float output = 1.0f;
 
-		foreach (TimeBubble tb in affectingTimeBubbles)
+		foreach (TimeBubble tb in AffectingTimeBubbles)
 		{
 			output *= tb.GetTimeScaleForObject(gameObject);
 		}

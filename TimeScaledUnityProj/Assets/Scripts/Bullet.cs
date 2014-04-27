@@ -73,7 +73,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 			Destroy(gameObject);
 	}
 
-	void OnCollisionEnter2D(Collision2D col)
+	protected virtual void OnCollisionEnter2D(Collision2D col)
 	{
 		Player p = col.gameObject.GetComponent<Player>();
 		if (p) // bullet has collided with a player
@@ -85,6 +85,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 
 	public virtual void Detonate()
 	{
+		Destroy(gameObject);
 	}
 
 	protected override BulletHS GetCurrentHistoryState()

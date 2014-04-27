@@ -41,7 +41,7 @@ public class BubbleDestroyer : Bullet
 	{
 		CheckLoadPrefab();
 
-		foreach (var bubble in affectingTimeBubbles)
+		foreach (var bubble in AffectingTimeBubbles)
 			Destroy(bubble.gameObject);
 
 		Destroy(gameObject);

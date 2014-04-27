@@ -11,6 +11,12 @@ public class Prejudice : TankSpecial<PrejudiceHS>
 	public bool Stealth { get; private set; }
 	public float stealthDuration;
 
+	public float missileSpeed;
+	public float missileDragTime;
+
+	public float eliminatorSpeed;
+	public float eliminatorLifeSpan;
+
 	public override float LocalFixedDeltaTime
 	{
 		get
@@ -21,9 +27,13 @@ public class Prejudice : TankSpecial<PrejudiceHS>
 
 	protected override void ExecuteSpecialX()
 	{
+		Eliminator.Spawn(transform.position + MathLib.FromPolar(Player.Radius, Player.TurretAngle).ToVector3(),
+			Player.TurretAngle, eliminatorSpeed, eliminatorLifeSpan);
 	}
 	protected override void ExecuteSpecialY()
 	{
+		PinMissile.Spawn(transform.position + MathLib.FromPolar(Player.Radius + Bullet.Radius, Player.TurretAngle).ToVector3(),
+			Player.TurretAngle, missileSpeed, missileDragTime, missileSpeed, missileDragTime);
 	}
 	protected override void ExecuteSpecialB()
 	{

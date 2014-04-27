@@ -44,7 +44,7 @@ public class ExtraDamageMarker : Bullet
 	{
 		CheckLoadPrefab();
 
-		owner.targets = affectingTimeBubbles.ToArray();
+		owner.targets = AffectingTimeBubbles.ToArray();
 
 		Destroy(gameObject);
 	}

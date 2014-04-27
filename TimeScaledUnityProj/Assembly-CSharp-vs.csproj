@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\BubbleDestroyer.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CameraExt.cs" />
+     <Compile Include="Assets\Scripts\Eliminator.cs" />
      <Compile Include="Assets\Scripts\ExtraDamageMarker.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -63,12 +64,15 @@
      <Compile Include="Assets\Scripts\Menus\MenuObject.cs" />
      <Compile Include="Assets\Scripts\Menus\MenuSelector.cs" />
      <Compile Include="Assets\Scripts\Menus\TankSelectionMenu.cs" />
+     <Compile Include="Assets\Scripts\PinMissile.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PointOfInterest.cs" />
      <Compile Include="Assets\Scripts\PolarityReverser.cs" />
      <Compile Include="Assets\Scripts\RectangleExt.cs" />
      <Compile Include="Assets\Scripts\ReverseBubble.cs" />
      <Compile Include="Assets\Scripts\ReverseBubbleSpawner.cs" />
+     <Compile Include="Assets\Scripts\Rigidbody2DExt.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Cryo.cs" />
      <Compile Include="Assets\Scripts\Tanks\Disruptor.cs" />
      <Compile Include="Assets\Scripts\Tanks\ITankSpecial.cs" />
      <Compile Include="Assets\Scripts\Tanks\Mammoth.cs" />
