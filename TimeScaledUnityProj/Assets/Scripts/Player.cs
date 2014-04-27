@@ -114,18 +114,21 @@ public class Player : HistoricalComponent<PlayerHS>
 		base.NewFixedUpdate();
 
 		// Apply damage to player if in time bubbles
-		if (affectingTimeBubbles.Count > 0)
+		if (!GameSettings.DebugInvincible)
 		{
-			PlayerHealth -= GameSettings.BUBBLE_DAMAGE_PER_SECOND * Mathf.Min(affectingTimeBubbles.Count, GameSettings.MAX_DAMAGING_BUBBLES) * Time.fixedDeltaTime;
-		}
-		// or heal the player if not in a time bubble
-		else
-		{
-			if (PlayerHealth < maxPlayerHealth)
+			if (affectingTimeBubbles.Count > 0)
 			{
-				PlayerHealth += GameSettings.HEALTH_REGEN_PER_SECOND * Time.fixedDeltaTime;
-				if (PlayerHealth > maxPlayerHealth)
-					PlayerHealth = maxPlayerHealth;
+				PlayerHealth -= GameSettings.BUBBLE_DAMAGE_PER_SECOND * Mathf.Min(affectingTimeBubbles.Count, GameSettings.MAX_DAMAGING_BUBBLES) * Time.fixedDeltaTime;
+			}
+			// or heal the player if not in a time bubble
+			else
+			{
+				if (PlayerHealth < maxPlayerHealth)
+				{
+					PlayerHealth += GameSettings.HEALTH_REGEN_PER_SECOND * Time.fixedDeltaTime;
+					if (PlayerHealth > maxPlayerHealth)
+						PlayerHealth = maxPlayerHealth;
+				}
 			}
 		}
 		// Check to see if the player is dead
