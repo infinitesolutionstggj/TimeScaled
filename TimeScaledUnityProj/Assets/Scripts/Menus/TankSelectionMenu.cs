@@ -176,9 +176,7 @@ public class TankSelectionMenu : MonoBehaviour
             if (playerSelections[i] != (int)GameSettings.TankType.None)
             {
                 GameSettings.PlayerInfos[i].PlayerID = i + 1;
-                GameSettings.PlayerInfos[i].TankType = tankMenuObjects[playerSelections[i]].ModelType; //(GameSettings.TankType)playerSelections[i];
-
-                Debug.Log("mooooo    " + GameSettings.PlayerInfos[i].TankType);
+                GameSettings.PlayerInfos[i].TankType = tankMenuObjects[playerSelections[i]].ModelType;
             }
         }
     }

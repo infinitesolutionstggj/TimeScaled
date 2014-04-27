@@ -33,7 +33,7 @@ public class BardScript : MonoBehaviour
 		}
 		if (IsPlaying)
 		{
-			Debug.Log(audio.time);
+			//Debug.Log(audio.time);
 		}
 	}
 
