@@ -38,6 +38,27 @@ public class Player : HistoricalComponent<PlayerHS>
 
 	public float CoolDownA { get; private set; }
 
+	public override float LocalFixedDeltaTime
+	{
+		get
+		{
+			if (tankSpecial is Prejudice && (tankSpecial as Prejudice).Stealth)
+				return Time.fixedDeltaTime;
+
+			return base.LocalFixedDeltaTime;
+		}
+	}
+	public override bool IsRewinding
+	{
+		get
+		{
+			if (tankSpecial is Prejudice && (tankSpecial as Prejudice).Stealth)
+				return false;
+
+			return base.IsRewinding;
+		}
+	}
+
 	public float Radius
 	{
 		get

@@ -6,7 +6,7 @@ public abstract class HistoricalComponent<T> : TimeScaledObject
 {
 	public LinkedList<T> history;
 	public bool IsFull { get; private set; }
-	public bool IsRewinding
+	public virtual bool IsRewinding
 	{
 		get { return affectingReverseBubbles.Count > 0; }
 	}
