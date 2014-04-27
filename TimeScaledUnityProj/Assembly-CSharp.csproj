@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\Tanks\Disruptor.cs" />
      <Compile Include="Assets\Scripts\Tanks\ITankSpecial.cs" />
      <Compile Include="Assets\Scripts\Tanks\Mammoth.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Prism.cs" />
      <Compile Include="Assets\Scripts\Tanks\Regressor.cs" />
      <Compile Include="Assets\Scripts\Tanks\TankSpecial.cs" />
      <Compile Include="Assets\Scripts\TimeBubble.cs" />
