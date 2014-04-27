@@ -51,6 +51,7 @@ public class Player : HistoricalComponent<PlayerHS>
 	}
 
 	public float shotSpeed;
+	public float shotStrength;
 
 	private float currentSpeed;
 	private float bodyAngle;
@@ -63,6 +64,11 @@ public class Player : HistoricalComponent<PlayerHS>
 	public float coolDownA;
 
 	public float CoolDownA { get; private set; }
+
+	// Knockback stuff
+	protected Vector3 knockbackDirection = Vector3.zero;
+	protected float knockbackTimer = 0;
+	protected bool IsBeingKnockedBack { get { return knockbackTimer > 0; } }
 
 	public override float LocalFixedDeltaTime
 	{
@@ -159,6 +165,11 @@ public class Player : HistoricalComponent<PlayerHS>
 		currentSpeed += LinearAcceleration * amount * LocalFixedDeltaTime;
 	}
 
+	protected void ApplyKnockback(Vector3 direction, float strength, float duration)
+	{
+
+	}
+
 	protected void RotateTurretTo(float angle)
 	{
 		TurretAngle = Mathf.MoveTowardsAngle(TurretAngle, angle, maxTurretSpeed * LocalFixedDeltaTime);
@@ -167,7 +178,7 @@ public class Player : HistoricalComponent<PlayerHS>
 	protected void ShootBullet()
 	{
 		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, TurretAngle).ToVector3(),
-			TurretAngle, shotSpeed, 2);
+			TurretAngle, shotSpeed, 2, shotStrength);
 		CoolDownA = coolDownA;
 	}
 

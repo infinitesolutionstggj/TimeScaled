@@ -37,7 +37,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 			prefabBullet = Resources.Load<GameObject>("Bullet").GetComponent<Bullet>();
 	}
 
-	public static Bullet Spawn(Vector3 position, float angle, float speed, float lifeTime)
+	public static Bullet Spawn(Vector3 position, float angle, float speed, float lifeTime, float knockbackStrength)
 	{
 		CheckLoadPrefab();
 
@@ -45,6 +45,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 		output.speed = speed;
 		output.angle = angle;
 		output.lifeTime = lifeTime;
+		output.KnockbackStrength = knockbackStrength;
 		return output;
 	}
 

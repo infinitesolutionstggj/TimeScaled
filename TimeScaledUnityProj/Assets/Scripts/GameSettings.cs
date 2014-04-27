@@ -15,6 +15,8 @@ public static class GameSettings
 	public const float BUBBLE_DAMAGE_PER_SECOND = 5f;				// Amount of damage each bubble will deal to you per second
 	public const float HEALTH_REGEN_PER_SECOND = 8f;				// Amount of health the player will regenerate per second when not affected by time bubbles
 
+	public const float PLAYER_KNOCKBACK_DURATION = 0.25f;			// Amount of time the player gets knocked back for when hit by a bullet
+
 	public static int MaxHistoryStates { get { return Mathf.CeilToInt(10 / FIXED_DELTA_TIME); } }
 
 	public enum TankType
