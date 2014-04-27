@@ -27,6 +27,28 @@ public class TankSelectionMenu : MonoBehaviour
         for (int i = 0; i < selectors.Length; i++)
         {
             selectors[i] = Instantiate(MenuSelectorPrefab, tankMenuObjects[i].Position, Quaternion.identity) as GameObject;
+            Debug.Log(selectors[i].GetComponentInChildren<Light>());
+
+          //  Light temp = selectors[i].transform.Find("Area Light") as Light;
+
+            switch (i)
+            {
+                case 0:
+                    selectors[i].GetComponentInChildren<Light>().color = Color.blue;
+                    break;
+                case 1:
+                    selectors[i].GetComponentInChildren<Light>().color = Color.red;
+                    break;
+                case 2:
+                    selectors[i].GetComponentInChildren<Light>().color = Color.green;
+                    break;
+                case 3:
+                    selectors[i].GetComponentInChildren<Light>().color = Color.yellow;
+                    break;
+                default:
+                    selectors[i].GetComponentInChildren<Light>().color = Color.white;
+                    break;
+            }
             playerSelections[i] = i;
         }
 	}
