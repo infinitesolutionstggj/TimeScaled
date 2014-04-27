@@ -21,6 +21,7 @@ public class Cryo : TankSpecial<CryoHS>
 	}
 	protected override void ExecuteSpecialY()
 	{
+		AudioManager.PlayClipByName("Shot 2");
 		FreezeMissile.Spawn(transform.position + MathLib.FromPolar(Player.Radius + ReverseBubbleSpawner.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, Player.shotSpeed, projectileLifeSpan, projectileDuration);
 	}

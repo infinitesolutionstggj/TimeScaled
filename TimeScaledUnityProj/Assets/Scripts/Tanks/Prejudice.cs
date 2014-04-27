@@ -27,11 +27,13 @@ public class Prejudice : TankSpecial<PrejudiceHS>
 
 	protected override void ExecuteSpecialX()
 	{
+		AudioManager.PlayClipByName("Shot 2");
 		Eliminator.Spawn(transform.position + MathLib.FromPolar(Player.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, eliminatorSpeed, eliminatorLifeSpan);
 	}
 	protected override void ExecuteSpecialY()
 	{
+		AudioManager.PlayClipByName("Shot 2");
 		PinMissile.Spawn(transform.position + MathLib.FromPolar(Player.Radius + Bullet.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, missileSpeed, missileDragTime, missileSpeed, missileDragTime);
 	}

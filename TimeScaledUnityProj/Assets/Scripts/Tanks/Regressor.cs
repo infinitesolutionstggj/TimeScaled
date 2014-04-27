@@ -16,11 +16,13 @@ public class Regressor : TankSpecial<RegressorHS>
 
 	protected override void ExecuteSpecialX()
 	{
+		AudioManager.PlayClipByName("Shot 2");
 		Bullet.Spawn(transform.position + MathLib.FromPolar(Player.Radius + Bullet.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, missileSpeed, missileLifeTime, knockBackPower);
 	}
 	protected override void ExecuteSpecialY()
 	{
+		AudioManager.PlayClipByName("Shot 2");
 		ReverseBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + ReverseBubbleSpawner.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, Player.shotSpeed, reverseDesc);
 	}
