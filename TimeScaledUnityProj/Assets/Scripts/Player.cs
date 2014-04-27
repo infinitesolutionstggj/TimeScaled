@@ -110,7 +110,7 @@ public class Player : HistoricalComponent<PlayerHS>
 		// Apply damage to player if in time bubbles
 		if (affectingTimeBubbles.Count > 0)
 		{
-			PlayerHealth -= GameSettings.BUBBLE_DAMAGE_PER_SECOND * affectingTimeBubbles.Count * Time.fixedDeltaTime;
+			PlayerHealth -= GameSettings.BUBBLE_DAMAGE_PER_SECOND * Mathf.Min(affectingTimeBubbles.Count, GameSettings.MAX_DAMAGING_BUBBLES) * Time.fixedDeltaTime;
 		}
 		// or heal the player if not in a time bubble
 		else
