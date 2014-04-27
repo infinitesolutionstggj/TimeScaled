@@ -21,9 +21,9 @@ public class MenuButton : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (exitButton && (XCI.GetButtonDown(buttonPress) || XCI.GetButtonDown(altButtonPress)))
+        if (exitButton && (XCI.GetButtonDown(buttonPress, 1) || XCI.GetButtonDown(altButtonPress, 1)))
             Application.Quit();
-        else if (XCI.GetButtonDown(buttonPress) || XCI.GetButtonDown(altButtonPress))
+        else if (XCI.GetButtonDown(buttonPress, 1) || XCI.GetButtonDown(altButtonPress, 1))
             if (Level != null) Application.LoadLevel(Level.name);
 	}
 }
