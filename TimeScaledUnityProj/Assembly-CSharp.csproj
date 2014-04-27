@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GameSettings.cs" />
+     <Compile Include="Assets\Scripts\HUD.cs" />
      <Compile Include="Assets\Scripts\HistoricalComponent.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MathLib.cs" />
