@@ -16,6 +16,8 @@ public class PlayerHS
 
 public class Player : HistoricalComponent<PlayerHS>
 {
+	public float Radius;
+
 	public int playerNumber;
 	public ITankSpecial tankSpecial;
 	public float maxPlayerHealth = 50f;
@@ -59,14 +61,6 @@ public class Player : HistoricalComponent<PlayerHS>
 				return false;
 
 			return base.IsRewinding;
-		}
-	}
-
-	public float Radius
-	{
-		get
-		{
-			return gameObject.GetComponent<CircleCollider2D>().radius;
 		}
 	}
 
