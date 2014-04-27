@@ -64,12 +64,18 @@ public class Player : HistoricalComponent<PlayerHS>
 		transform.rotation = Quaternion.Euler(0, 0, bodyAngle);
 		transform.GetChild(0).rotation = Quaternion.Euler(0, 0, turretAngle);
 
-		if (XCI.GetButtonDown(XboxButton.A, playerNumber))
-			ShootBullet();
 		if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
 			currentSlowShot = ShootSlowBubble();
 		if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
 			currentFastShot = ShootFastBubble();
+		if (XCI.GetButtonDown(XboxButton.A, playerNumber))
+			ShootBullet();
+		if (XCI.GetButtonDown(XboxButton.X, playerNumber))
+			ShootBullet();
+		if (XCI.GetButtonDown(XboxButton.Y, playerNumber))
+			ShootBullet();
+		if (XCI.GetButtonDown(XboxButton.B, playerNumber))
+			ShootBullet();
 
 		if (currentSlowShot != null && XCI.GetButtonUp(XboxButton.LeftBumper, playerNumber))
 			currentSlowShot.Detonate();

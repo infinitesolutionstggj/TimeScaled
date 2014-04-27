@@ -85,7 +85,7 @@ public class TimeBubbleSpawner : Bullet
 		float quality = Quality;
 
 		TimeBubble bubble = Instantiate(prefabBubble, transform.position, Quaternion.identity) as TimeBubble;
-		bubble.transform.localScale = Vector3.one * Mathf.Lerp(limits.minRadius, limits.maxRadius, quality);
+		bubble.transform.localScale = Vector3.one * Mathf.Lerp(limits.minRadius, limits.maxRadius, quality) * 2;
 		bubble.innerRadiusPercent = Mathf.Lerp(limits.minInnerRadiusPercentage, limits.maxInnerRadiusPercentage, quality);
 		bubble.lifeSpan = Mathf.Lerp(limits.minLifeSpan, limits.maxLifeSpan, quality);
 
