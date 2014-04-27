@@ -114,7 +114,9 @@ public class Player : HistoricalComponent<PlayerHS>
 		Frozen f = gameObject.GetComponent<Frozen>();
 
 		if (f == null)
+		{
 			f = gameObject.AddComponent<Frozen>();
+		}
 
 		f.thawTime = time;
 		f.enabled = true;

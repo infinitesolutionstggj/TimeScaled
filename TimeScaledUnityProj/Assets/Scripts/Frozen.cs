@@ -10,7 +10,7 @@ public class Frozen : MonoBehaviour
 		enabled = false;
 	}
 
-	void OnEnabled()
+	void OnEnable()
 	{
 		StartCoroutine(WaitForThaw());
 	}

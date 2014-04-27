@@ -17,7 +17,8 @@ public class Cryo : TankSpecial<CryoHS>
 	protected override void ExecuteSpecialX()
 	{
 		foreach (var player in Player.All)
-			player.FreezeFor(freezeDuration);
+			if (player != Player)
+				player.FreezeFor(freezeDuration);
 	}
 	protected override void ExecuteSpecialY()
 	{

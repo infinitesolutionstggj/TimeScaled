@@ -12,7 +12,7 @@ public class ExtraDamageMarker : Bullet
 		get
 		{
 			CheckLoadPrefab();
-
+			Debug.Log(PrefabMarker);
 			return PrefabMarker.gameObject.GetComponent<CircleCollider2D>().radius;
 		}
 	}
