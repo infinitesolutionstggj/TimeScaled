@@ -3,17 +3,25 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+	public static GameManager Main = null;
+
+	public bool debugInvincible = false;
 	public GameObject testPrefab;
 	public GameObject detonator;
 	public GameObject playerPrefab;
 
 	void Awake()
 	{
-		
+		if (Main == null)
+			Main = this;
+		else
+			Destroy(this.gameObject);
 	}
 
 	void OnDestroy()
 	{
+		if (Main == this)
+			Main = null;
 	}
 
 	// Use this for initialization

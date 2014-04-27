@@ -19,6 +19,7 @@ public static class GameSettings
 	public const float PLAYER_KNOCKBACK_DURATION = 0.125f;			// Amount of time the player gets knocked back for when hit by a bullet
 
 	public static int MaxHistoryStates { get { return Mathf.CeilToInt(10 / FIXED_DELTA_TIME); } }
+	public static bool DebugInvincible { get { return GameManager.Main != null ? GameManager.Main.debugInvincible : false; } }
 
 	public enum TankType
 	{
