@@ -31,6 +31,11 @@ public class Bubble : MonoBehaviour
 			Destroy(this.gameObject, lifeSpan);
 	}
 
+	protected virtual void OnDestroy()
+	{
+		AudioManager.PlayClipByName("Despawn");
+	}
+
 	protected virtual void OnTriggerEnter2D(Collider2D col)
 	{
 		TimeScaledObject obj = col.gameObject.GetComponent<TimeScaledObject>();

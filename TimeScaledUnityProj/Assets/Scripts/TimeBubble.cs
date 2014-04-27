@@ -13,6 +13,7 @@ public class TimeBubble : Bubble
 		base.Awake();
 
 		innerRadiusPercent = Mathf.Clamp01(innerRadiusPercent);
+		AudioManager.PlayClipByName("BubbleSpawn2");
 	}
 
 	protected override void Start()
@@ -22,8 +23,10 @@ public class TimeBubble : Bubble
 		ResetMaterial();
 	}
 
-	void OnDestroy()
+	protected override void OnDestroy()
 	{
+		base.OnDestroy();
+
 		foreach (TimeScaledObject obj in AffectedObjects)
 		{
 			obj.RemoveTimeBubble(this);
