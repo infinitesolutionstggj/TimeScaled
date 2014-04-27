@@ -20,8 +20,8 @@ public class MenuObject : MonoBehaviour
 
 		switch(gameObject.name)
 		{
-		case "CyroTankSelection":
-			ModelType = GameSettings.TankType.Cyro;
+		case "CryoTankSelection":
+			ModelType = GameSettings.TankType.Cryo;
 			break;
 		case "DisruptorTankSelection":
 			ModelType = GameSettings.TankType.Disruptor;

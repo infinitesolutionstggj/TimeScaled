@@ -21,9 +21,11 @@ public static class GameSettings
 	public static int MaxHistoryStates { get { return Mathf.CeilToInt(10 / FIXED_DELTA_TIME); } }
 	public static bool DebugInvincible { get { return GameManager.Main != null ? GameManager.Main.debugInvincible : false; } }
 
+    public static PlayerInfo[] PlayerInfos = new PlayerInfo[4];
+
 	public enum TankType
 	{
-		Cyro,
+		Cryo = 0,
 		Disruptor,
 		Mammoth,
 		Prejudice,

@@ -8,20 +8,53 @@ public class LevelManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        //Player tempPlayer;
 	    // spawn players
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn Point");
-        GameObject playerPrefab = GameObject.Find("GameManager").GetComponent<GameManager>().playerPrefab;
+        string tankName = "";
+        GameObject playerPrefab = null;
+
+        if (GameManager.Main)
+            playerPrefab = GameManager.Main.playerPrefab;
+
         if (playerPrefab)
         {
-            Debug.Log("mooo   " + spawns.Length);
             for (int i = 0; i < spawns.Length; i++)
             {
-                Debug.Log("weeee    " + i);
-                //tempPlayer = Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity) as Player;
-                //tempPlayer.playerNumber = i + 1;
-                playerPrefab.GetComponent<Player>().playerNumber = i+1;
-                Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity);
+                if (GameSettings.PlayerInfos[i].TankType != GameSettings.TankType.None)
+                {
+                    switch (GameSettings.PlayerInfos[i].TankType)
+                    {
+                        case GameSettings.TankType.Cryo:
+                            tankName = "Tanks/Cryo";
+                            break;
+                        case GameSettings.TankType.Disruptor:
+                            tankName = "Tanks/Disruptor";
+                            break;
+                        case GameSettings.TankType.Mammoth:
+                            tankName = "Tanks/Mammoth";
+                            break;
+                        case GameSettings.TankType.Prejudice:
+                            tankName = "Tanks/Prejudice";
+                            break;
+                        case GameSettings.TankType.Prism:
+                            tankName = "Tanks/Prism";
+                            break;
+                        case GameSettings.TankType.Regressor:
+                            tankName = "Tanks/Regressor";
+                            break;
+                        default:
+                            //ModelType = GameSettings.TankType.None;
+                            break;
+                    }
+
+                    if (tankName != "")
+                    {
+                        playerPrefab = Resources.Load(tankName) as GameObject;
+                        Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity);
+                        playerPrefab.GetComponent<Player>().playerNumber = GameSettings.PlayerInfos[i].PlayerID;
+                        tankName = "";
+                    }
+                }
             }
         }
 	}

@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public class PlayerInfo
+{
+    public int PlayerID = 0;
+    public GameSettings.TankType TankType = GameSettings.TankType.None;
+    public string PlayerName = "";
+}
+
 public class GameManager : MonoBehaviour
 {
 	public static GameManager Main = null;
@@ -9,6 +16,7 @@ public class GameManager : MonoBehaviour
 	public GameObject testPrefab;
 	public GameObject detonator;
 	public GameObject playerPrefab;
+    public PlayerInfo[] selectedTanks = new PlayerInfo[4];
 
 	void Awake()
 	{
@@ -23,9 +31,12 @@ public class GameManager : MonoBehaviour
 		{
 			AudioManager.PlayBGMusicByIndex(0);
 		}
+
+        for (int i = 0; i < 4; i++)
+            selectedTanks[i] = new PlayerInfo();
 	}
 
-	void OnDestroy()
+    void OnDestroy()
 	{
 		if (Main == this)
 			Main = null;

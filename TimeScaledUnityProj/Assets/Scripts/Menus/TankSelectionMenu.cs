@@ -20,6 +20,9 @@ public class TankSelectionMenu : MonoBehaviour
 
 		for(int i = 0; i < selectorCoolDowns.Length; i++)
 			selectorCoolDowns[i] = false;
+
+        for (int i = 0; i < 4; i++)
+            GameSettings.PlayerInfos[i] = new PlayerInfo();
 	}
 
     void Start() 
@@ -50,7 +53,7 @@ public class TankSelectionMenu : MonoBehaviour
                     selectors[i].GetComponentInChildren<Light>().color = Color.white;
                     break;
             }
-            playerSelections[i] = 6;
+            playerSelections[i] = (int)GameSettings.TankType.None;
         }
 
 	}
@@ -100,7 +103,6 @@ public class TankSelectionMenu : MonoBehaviour
 
 					selectorCoolDowns[i] = true;
 					StartCoroutine(SelectionWait(i));
-					Debug.Log("Player " + i + " index: " + playerSelections[i]);
 				}
 				else if(XCI.GetAxis(XboxAxis.LeftStickX, i+1) < -0.5)
 				{
@@ -123,7 +125,6 @@ public class TankSelectionMenu : MonoBehaviour
 
 					selectorCoolDowns[i] = true;
 					StartCoroutine(SelectionWait(i));
-					Debug.Log("Player " + i + " index: " + playerSelections[i]);
 				}
 			}
 		}
@@ -166,5 +167,17 @@ public class TankSelectionMenu : MonoBehaviour
         }
 
         return false;
+    }
+
+    void assignChoices()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (playerSelections[i] != (int)GameSettings.TankType.None)
+            {
+                GameSettings.PlayerInfos[i].PlayerID = i + 1;
+                GameSettings.PlayerInfos[i].TankType = (GameSettings.TankType)playerSelections[i];
+            }
+        }
     }
 }
