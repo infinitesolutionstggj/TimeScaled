@@ -31,8 +31,8 @@ public class Player : HistoricalComponent<PlayerHS>
 	public float TurretAngle { get; private set; }
 
 	public TimeBubbleLimits timeBubbleLimits;
-	private TimeBubbleSpawner currentSlowShot;
-	private TimeBubbleSpawner currentFastShot;
+	public TimeBubbleSpawner CurrentSlowShot { get; private set; }
+	public TimeBubbleSpawner CurrentFastShot { get; private set; }
 
 	public float coolDownA;
 
@@ -72,9 +72,9 @@ public class Player : HistoricalComponent<PlayerHS>
 		transform.GetChild(0).rotation = Quaternion.Euler(0, 0, TurretAngle);
 
 		if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
-			currentSlowShot = ShootSlowBubble();
+			CurrentSlowShot = ShootSlowBubble();
 		if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
-			currentFastShot = ShootFastBubble();
+			CurrentFastShot = ShootFastBubble();
 		if (XCI.GetButtonDown(XboxButton.A, playerNumber) && CoolDownA <= 0)
 			ShootBullet();
 		if (XCI.GetButtonDown(XboxButton.X, playerNumber))
@@ -84,10 +84,10 @@ public class Player : HistoricalComponent<PlayerHS>
 		if (XCI.GetButtonDown(XboxButton.B, playerNumber))
 			tankSpecial.SpecialB();
 
-		if (currentSlowShot != null && XCI.GetButtonUp(XboxButton.LeftBumper, playerNumber))
-			currentSlowShot.Detonate();
-		if (currentFastShot != null && XCI.GetButtonUp(XboxButton.RightBumper, playerNumber))
-			currentFastShot.Detonate();
+		if (CurrentSlowShot != null && XCI.GetButtonUp(XboxButton.LeftBumper, playerNumber))
+			CurrentSlowShot.Detonate();
+		if (CurrentFastShot != null && XCI.GetButtonUp(XboxButton.RightBumper, playerNumber))
+			CurrentFastShot.Detonate();
 
 		CoolDownA -= LocalFixedDeltaTime;
 	}

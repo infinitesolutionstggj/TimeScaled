@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class TankSpecial<T> : HistoricalComponent<T>, ITankSpecial
+public class TankSpecialHS
+{
+	public float coolDownX;
+	public float coolDownY;
+	public float coolDownB;
+}
+
+public abstract class TankSpecial<T> : HistoricalComponent<T>, ITankSpecial where T : TankSpecialHS
 {
 	public Player Player { get; private set; }
 
@@ -46,7 +53,32 @@ public abstract class TankSpecial<T> : HistoricalComponent<T>, ITankSpecial
 		}
 	}
 
+	protected override void NewFixedUpdate()
+	{
+		base.NewFixedUpdate();
+
+		CoolDownX -= LocalFixedDeltaTime;
+		CoolDownY -= LocalFixedDeltaTime;
+		CoolDownB -= LocalFixedDeltaTime;
+	}
+
 	protected abstract void ExecuteSpecialX();
 	protected abstract void ExecuteSpecialY();
 	protected abstract void ExecuteSpecialB();
+
+	protected TankSpecialHS _GetCurrentHistoryState()
+	{
+		TankSpecialHS output = new TankSpecialHS();
+		output.coolDownX = CoolDownX;
+		output.coolDownY = CoolDownY;
+		output.coolDownB = CoolDownB;
+		return output;
+	}
+
+	protected void _ApplyHistoryState(TankSpecialHS state)
+	{
+		CoolDownX = state.coolDownX;
+		CoolDownY = state.coolDownY;
+		CoolDownB = state.coolDownB;
+	}
 }

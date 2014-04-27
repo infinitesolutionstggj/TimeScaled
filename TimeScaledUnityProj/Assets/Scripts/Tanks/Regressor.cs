@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RegressorHS
+public class RegressorHS : TankSpecialHS
 {
 
 }
@@ -24,11 +24,16 @@ public class Regressor : TankSpecial<RegressorHS>
 
 	protected override RegressorHS GetCurrentHistoryState()
 	{
-		return new RegressorHS();
+		TankSpecialHS input = _GetCurrentHistoryState();
+		RegressorHS output = new RegressorHS();
+		output.coolDownX = input.coolDownX;
+		output.coolDownY = input.coolDownY;
+		output.coolDownB = input.coolDownB;
+		return output;
 	}
 
 	protected override void ApplyHistoryState(RegressorHS state)
 	{
-
+		_ApplyHistoryState(state);
 	}
 }

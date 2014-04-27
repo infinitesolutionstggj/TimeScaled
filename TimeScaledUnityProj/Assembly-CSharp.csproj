@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\ReverseBubble.cs" />
      <Compile Include="Assets\Scripts\ReverseBubbleSpawner.cs" />
      <Compile Include="Assets\Scripts\Tanks\ITankSpecial.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Mammoth.cs" />
      <Compile Include="Assets\Scripts\Tanks\Regressor.cs" />
      <Compile Include="Assets\Scripts\Tanks\TankSpecial.cs" />
      <Compile Include="Assets\Scripts\TimeBubble.cs" />
