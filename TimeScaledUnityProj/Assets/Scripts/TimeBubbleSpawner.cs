@@ -31,7 +31,7 @@ public class TimeBubbleSpawner : Bullet
 		}
 	}
 
-	public static new TimeBubbleSpawner Spawn(Vector3 position, bool isSlowBubble, float angle, float speed, float lifeTime, TimeBubbleLimits limits)
+	public static TimeBubbleSpawner Spawn(Vector3 position, bool isSlowBubble, float angle, float speed, float lifeTime, TimeBubbleLimits limits)
 	{
 		CheckLoadPrefab();
 
