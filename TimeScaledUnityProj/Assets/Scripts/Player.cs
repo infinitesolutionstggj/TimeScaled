@@ -66,7 +66,7 @@ public class Player : HistoricalComponent<PlayerHS>
 	public float CoolDownA { get; private set; }
 
 	// Knockback stuff
-	protected Vector3 knockbackDirection = Vector3.zero;
+	protected Vector3 knockbackVelocity = Vector3.zero;
 	protected float knockbackTimer = 0;
 	protected bool IsBeingKnockedBack { get { return knockbackTimer > 0; } }
 
@@ -128,28 +128,37 @@ public class Player : HistoricalComponent<PlayerHS>
 			Destroy(this.gameObject);
 		}
 
-		currentSpeed = Mathf.Lerp(currentSpeed, 0, linearDrag * LocalFixedDeltaTime);
-		Thrust(XCI.GetAxis(XboxAxis.RightTrigger, playerNumber) - XCI.GetAxis(XboxAxis.LeftTrigger, playerNumber));
-		if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickX, playerNumber)) > 0.1 || Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickY, playerNumber)) > 0.1)
-			RotateTurretTo(MathLib.Atand2(XCI.GetAxis(XboxAxis.RightStickY, playerNumber), XCI.GetAxis(XboxAxis.RightStickX, playerNumber)));
+		if (IsBeingKnockedBack)
+		{
+			transform.position += knockbackVelocity * LocalFixedDeltaTime;
+			bodyAngle = MathLib.Atand2(transform.right.y, transform.right.x);
+			knockbackTimer -= LocalFixedDeltaTime;
+		}
+		else
+		{
+			currentSpeed = Mathf.Lerp(currentSpeed, 0, linearDrag * LocalFixedDeltaTime);
+			Thrust(XCI.GetAxis(XboxAxis.RightTrigger, playerNumber) - XCI.GetAxis(XboxAxis.LeftTrigger, playerNumber));
+			if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickX, playerNumber)) > 0.1 || Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickY, playerNumber)) > 0.1)
+				RotateTurretTo(MathLib.Atand2(XCI.GetAxis(XboxAxis.RightStickY, playerNumber), XCI.GetAxis(XboxAxis.RightStickX, playerNumber)));
 
-		bodyAngle -= MaxTurnSpeed * currentSpeed * XCI.GetAxis(XboxAxis.LeftStickX, playerNumber) * LocalFixedDeltaTime;
-		transform.position += new Vector2(MathLib.Cosd(bodyAngle), MathLib.Sind(bodyAngle)).ToVector3() * currentSpeed * LocalFixedDeltaTime;
-		transform.rotation = Quaternion.Euler(0, 0, bodyAngle);
-		transform.GetChild(0).rotation = Quaternion.Euler(0, 0, TurretAngle);
+			bodyAngle -= MaxTurnSpeed * currentSpeed * XCI.GetAxis(XboxAxis.LeftStickX, playerNumber) * LocalFixedDeltaTime;
+			transform.position += new Vector2(MathLib.Cosd(bodyAngle), MathLib.Sind(bodyAngle)).ToVector3() * currentSpeed * LocalFixedDeltaTime;
+			transform.rotation = Quaternion.Euler(0, 0, bodyAngle);
+			transform.GetChild(0).rotation = Quaternion.Euler(0, 0, TurretAngle);
 
-		if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
-			CurrentSlowShot = ShootSlowBubble();
-		if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
-			CurrentFastShot = ShootFastBubble();
-		if (XCI.GetButtonDown(XboxButton.A, playerNumber) && CoolDownA <= 0)
-			ShootBullet();
-		if (XCI.GetButtonDown(XboxButton.X, playerNumber))
-			tankSpecial.SpecialX();
-		if (XCI.GetButtonDown(XboxButton.Y, playerNumber))
-			tankSpecial.SpecialY();
-		if (XCI.GetButtonDown(XboxButton.B, playerNumber))
-			tankSpecial.SpecialB();
+			if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
+				CurrentSlowShot = ShootSlowBubble();
+			if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
+				CurrentFastShot = ShootFastBubble();
+			if (XCI.GetButtonDown(XboxButton.A, playerNumber) && CoolDownA <= 0)
+				ShootBullet();
+			if (XCI.GetButtonDown(XboxButton.X, playerNumber))
+				tankSpecial.SpecialX();
+			if (XCI.GetButtonDown(XboxButton.Y, playerNumber))
+				tankSpecial.SpecialY();
+			if (XCI.GetButtonDown(XboxButton.B, playerNumber))
+				tankSpecial.SpecialB();
+		}
 
 		if (CurrentSlowShot != null && XCI.GetButtonUp(XboxButton.LeftBumper, playerNumber))
 			CurrentSlowShot.Detonate();
@@ -165,9 +174,10 @@ public class Player : HistoricalComponent<PlayerHS>
 		currentSpeed += LinearAcceleration * amount * LocalFixedDeltaTime;
 	}
 
-	protected void ApplyKnockback(Vector3 direction, float strength, float duration)
+	public void ApplyKnockback(Vector3 direction, float strength, float duration)
 	{
-
+		knockbackVelocity = direction.normalized * strength;
+		knockbackTimer = duration;
 	}
 
 	protected void RotateTurretTo(float angle)

@@ -73,13 +73,14 @@ public class Bullet : HistoricalComponent<BulletHS>
 			Destroy(gameObject);
 	}
 
-	void OnCollisionEnter(Collision col)
+	void OnCollisionEnter2D(Collision2D col)
 	{
 		Player p = col.gameObject.GetComponent<Player>();
 		if (p) // bullet has collided with a player
 		{
-
+			p.ApplyKnockback(Velocity, KnockbackStrength, GameSettings.PLAYER_KNOCKBACK_DURATION);
 		}
+		Detonate();
 	}
 
 	public virtual void Detonate()
