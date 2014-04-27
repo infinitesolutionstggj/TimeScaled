@@ -9,8 +9,6 @@ public class BardScript : MonoBehaviour
 
 	public bool IsPlaying { get { return audio.isPlaying; } }
 	public bool LoopBGMusic { get; private set; }
-	private double loopTimeStamp = 0;
-	private double nextEventTime = 0;
 
 	void Awake () 
 	{
@@ -48,7 +46,6 @@ public class BardScript : MonoBehaviour
 	public void SetCustomLooping(bool looping, double timestamp)
 	{
 		LoopBGMusic = looping;
-		loopTimeStamp = timestamp;
 	}
 
 	public void PlayClipByName(string name)

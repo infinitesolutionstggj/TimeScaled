@@ -32,19 +32,19 @@ public class Disruptor : TankSpecial<DisruptorHS>
 
 	protected override void ExecuteSpecialX()
 	{
-		AudioManager.PlayClipByName("Shot 2");
+		AudioManager.PlayClipByName("Shot2");
 		ExtraDamageMarker.Spawn(transform.position + MathLib.FromPolar(Player.Radius + ExtraDamageMarker.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, Player.shotSpeed, this);
 	}
 	protected override void ExecuteSpecialY()
 	{
-		AudioManager.PlayClipByName("Shot 2");
+		AudioManager.PlayClipByName("Shot2");
 		BubbleDestroyer.Spawn(transform.position + MathLib.FromPolar(Player.Radius + BubbleDestroyer.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, Player.shotSpeed);
 	}
 	protected override void ExecuteSpecialB()
 	{
-		AudioManager.PlayClipByName("Shot 2");
+		AudioManager.PlayClipByName("Shot2");
 		PolarityReverser.Spawn(transform.position + MathLib.FromPolar(Player.Radius + PolarityReverser.Radius, Player.TurretAngle).ToVector3(),
 			Player.TurretAngle, Player.shotSpeed);
 	}

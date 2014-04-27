@@ -228,19 +228,19 @@ public class Player : HistoricalComponent<PlayerHS>
 
 		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, TurretAngle).ToVector3(),
 			TurretAngle, shotSpeed, 2, shotStrength);
-		AudioManager.PlayClipByName("Shot 1");
+		AudioManager.PlayClipByName("Shot1");
 		CoolDownA = coolDownA;
 	}
 
 	protected TimeBubbleSpawner ShootFastBubble()
 	{
-		AudioManager.PlayClipByName("Shot 1");
+		AudioManager.PlayClipByName("Shot1");
 		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, TurretAngle).ToVector3(), false, TurretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
 	protected TimeBubbleSpawner ShootSlowBubble()
 	{
-		AudioManager.PlayClipByName("Shot 1");
+		AudioManager.PlayClipByName("Shot1");
 		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, TurretAngle).ToVector3(), true, TurretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
