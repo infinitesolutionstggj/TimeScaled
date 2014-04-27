@@ -13,25 +13,25 @@ public class TimeBubble : Bubble
 		base.Awake();
 
 		innerRadiusPercent = Mathf.Clamp01(innerRadiusPercent);
+		AudioManager.PlayClipByName("BubbleSpawn2");
 	}
 
 	protected override void Start()
 	{
 		base.Start();
 
-		if (timeScaleMultiplier < 1)
-			renderer.material = SlowMat;
-		else
-			renderer.material = FastMat;
+		ResetMaterial();
 	}
 
-	void OnDestroy()
+	protected override void OnDestroy()
 	{
-		foreach (TimeScaledObject obj in affectedObjects)
+		base.OnDestroy();
+
+		foreach (TimeScaledObject obj in AffectedObjects)
 		{
 			obj.RemoveTimeBubble(this);
 		}
-		affectedObjects.Clear();
+		AffectedObjects.Clear();
 	}
 
 	void Update()
@@ -86,5 +86,13 @@ public class TimeBubble : Bubble
 			}
 
 		return t;
+	}
+
+	public void ResetMaterial()
+	{
+		if (timeScaleMultiplier < 1)
+			renderer.material = SlowMat;
+		else
+			renderer.material = FastMat;
 	}
 }

@@ -8,6 +8,7 @@ public class ReverseBubble : Bubble
 		base.Awake();
 
 		renderer.material = ReverseMat;
+		AudioManager.PlayClipByName("BubbleSpawn1");
 	}
 
 	protected override void Start()
@@ -18,13 +19,15 @@ public class ReverseBubble : Bubble
 		base.Start();
 	}
 
-	void OnDestroy()
+	protected override void OnDestroy()
 	{
-		foreach (TimeScaledObject obj in affectedObjects)
+		base.OnDestroy();
+
+		foreach (TimeScaledObject obj in AffectedObjects)
 		{
 			obj.RemoveReverseBubble(this);
 		}
-		affectedObjects.Clear();
+		AffectedObjects.Clear();
 	}
 
 	protected override void OnTriggerEnter2D(Collider2D col)

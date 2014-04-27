@@ -84,6 +84,46 @@
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\Plugins\XInputDotNetPure.dll</HintPath>
     </Reference>
+     <Compile Include="Assets\Scripts\AudioManager.cs" />
+     <Compile Include="Assets\Scripts\BardScript.cs" />
+     <Compile Include="Assets\Scripts\Bubble.cs" />
+     <Compile Include="Assets\Scripts\BubbleDestroyer.cs" />
+     <Compile Include="Assets\Scripts\Bullet.cs" />
+     <Compile Include="Assets\Scripts\CameraExt.cs" />
+     <Compile Include="Assets\Scripts\ExtraDamageMarker.cs" />
+     <Compile Include="Assets\Scripts\GameCamera.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GameSettings.cs" />
+     <Compile Include="Assets\Scripts\HistoricalComponent.cs" />
+     <Compile Include="Assets\Scripts\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\MathLib.cs" />
+     <Compile Include="Assets\Scripts\Menus\MenuButton.cs" />
+     <Compile Include="Assets\Scripts\Menus\MenuObject.cs" />
+     <Compile Include="Assets\Scripts\Menus\MenuSelector.cs" />
+     <Compile Include="Assets\Scripts\Menus\StartButton.cs" />
+     <Compile Include="Assets\Scripts\Menus\TankSelectionMenu.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\PointOfInterest.cs" />
+     <Compile Include="Assets\Scripts\PolarityReverser.cs" />
+     <Compile Include="Assets\Scripts\RectangleExt.cs" />
+     <Compile Include="Assets\Scripts\ReverseBubble.cs" />
+     <Compile Include="Assets\Scripts\ReverseBubbleSpawner.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Disruptor.cs" />
+     <Compile Include="Assets\Scripts\Tanks\ITankSpecial.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Mammoth.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Prejudice.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Prism.cs" />
+     <Compile Include="Assets\Scripts\Tanks\Regressor.cs" />
+     <Compile Include="Assets\Scripts\Tanks\TankSpecial.cs" />
+     <Compile Include="Assets\Scripts\TimeBubble.cs" />
+     <Compile Include="Assets\Scripts\TimeBubbleSpawner.cs" />
+     <Compile Include="Assets\Scripts\TimeScaledObject.cs" />
+     <Compile Include="Assets\Scripts\Vector2Ext.cs" />
+     <Compile Include="Assets\Scripts\XboxCtrlrInput.cs" />
+     <None Include="Assets\Sounds\Will&apos;s Contact Info.txt" />
+ <Reference Include="XInputDotNetPure">
+ <HintPath>Assets\Plugins\XInputDotNetPure.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
