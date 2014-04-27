@@ -26,7 +26,7 @@ public class TankSelectionMenu : MonoBehaviour
 	{
         for (int i = 0; i < selectors.Length; i++)
         {
-            selectors[i] = Instantiate(MenuSelectorPrefab, tankMenuObjects[i].Position, Quaternion.identity) as GameObject;
+            selectors[i] = Instantiate(MenuSelectorPrefab, tankMenuObjects[6].Position, Quaternion.identity) as GameObject;
 
             switch (i)
             {
@@ -50,7 +50,7 @@ public class TankSelectionMenu : MonoBehaviour
                     selectors[i].GetComponentInChildren<Light>().color = Color.white;
                     break;
             }
-            playerSelections[i] = i;
+            playerSelections[i] = 6;
         }
 
 	}
@@ -156,9 +156,13 @@ public class TankSelectionMenu : MonoBehaviour
 
     bool isOccupied(int idx)
     {
+        if (idx == 6)
+            return false;
+
         for (int i = 0; i < playerSelections.Length; i++)
         {
-            if (playerSelections[i] == idx) return true;
+            if (playerSelections[i] == idx) 
+                return true;
         }
 
         return false;
