@@ -8,17 +8,15 @@ public class RegressorHS
 
 public class Regressor : TankSpecial<RegressorHS>
 {
-	protected override void SpecialX()
+	protected override void ExecuteSpecialX()
 	{
-		base.SpecialX();
 	}
-	protected override void SpecialY()
+	protected override void ExecuteSpecialY()
 	{
-		base.SpecialY();
+
 	}
-	protected override void SpecialB()
+	protected override void ExecuteSpecialB()
 	{
-		base.SpecialB();
 	}
 
 	protected override RegressorHS GetCurrentHistoryState()

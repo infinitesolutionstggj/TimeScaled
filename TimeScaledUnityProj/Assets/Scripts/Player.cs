@@ -10,11 +10,14 @@ public class PlayerHS
 	public float bodyAngle;
 	public float turretAngle;
 	public Quaternion turretRotation;
+
+	public float coolDownA;
 }
 
 public class Player : HistoricalComponent<PlayerHS>
 {
 	public int playerNumber;
+	public ITankSpecial tankSpecial;
 
 	public float linearDrag;
 	public float linearAcceleration;
@@ -30,6 +33,10 @@ public class Player : HistoricalComponent<PlayerHS>
 	public TimeBubbleLimits timeBubbleLimits;
 	private TimeBubbleSpawner currentSlowShot;
 	private TimeBubbleSpawner currentFastShot;
+
+	public float coolDownA;
+
+	public float CoolDownA { get; private set; }
 
 	public float Radius
 	{
@@ -71,16 +78,18 @@ public class Player : HistoricalComponent<PlayerHS>
 		if (XCI.GetButtonDown(XboxButton.A, playerNumber))
 			ShootBullet();
 		if (XCI.GetButtonDown(XboxButton.X, playerNumber))
-			ShootBullet();
+			tankSpecial.SpecialX();
 		if (XCI.GetButtonDown(XboxButton.Y, playerNumber))
-			ShootBullet();
+			tankSpecial.SpecialY();
 		if (XCI.GetButtonDown(XboxButton.B, playerNumber))
-			ShootBullet();
+			tankSpecial.SpecialB();
 
 		if (currentSlowShot != null && XCI.GetButtonUp(XboxButton.LeftBumper, playerNumber))
 			currentSlowShot.Detonate();
 		if (currentFastShot != null && XCI.GetButtonUp(XboxButton.RightBumper, playerNumber))
 			currentFastShot.Detonate();
+
+		coolDownA -= LocalFixedDeltaTime;
 	}
 
 	// Thrust forward/backward a given proportion of max speed
