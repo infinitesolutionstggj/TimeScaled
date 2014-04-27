@@ -8,6 +8,19 @@ public class PrismHS : TankSpecialHS
 
 public class Prism : TankSpecial<PrismHS>
 {
+	public float boostAccelerationMultiplier;
+	public float boostTurnSpeedMultiplier;
+
+	public float boostDuration;
+	public bool Boost
+	{
+		get
+		{
+			return CurrentElapsedBoost < boostDuration;
+		}
+	}
+	public float CurrentElapsedBoost { get; private set; }
+
 	public float blinkDistance;
 
 	protected override void ExecuteSpecialX()
@@ -16,9 +29,17 @@ public class Prism : TankSpecial<PrismHS>
 	}
 	protected override void ExecuteSpecialY()
 	{
+		CurrentElapsedBoost = 0;
 	}
 	protected override void ExecuteSpecialB()
 	{
+	}
+
+	protected override void NewFixedUpdate()
+	{
+		base.NewFixedUpdate();
+
+		CurrentElapsedBoost += LocalFixedDeltaTime;
 	}
 
 	protected override PrismHS GetCurrentHistoryState()
