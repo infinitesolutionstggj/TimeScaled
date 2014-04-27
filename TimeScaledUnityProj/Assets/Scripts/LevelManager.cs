@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn Point");
         string tankName = "";
         GameObject playerPrefab = null;
-        //Player spawnedPlayer = null;
+        GameObject spawnedObj = null;
 
         //if (GameManager.Main)
             //playerPrefab = GameManager.Main.playerPrefab;
@@ -54,8 +54,8 @@ public class LevelManager : MonoBehaviour
                     {
                         Debug.Log(GameSettings.PlayerInfos[i].PlayerID);
                         playerPrefab = Resources.Load(tankName) as GameObject;
-                        playerPrefab.GetComponent<Player>().playerNumber = GameSettings.PlayerInfos[i].PlayerID;
-                        /*spawnedPlayer = */Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity);
+                        spawnedObj = Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity) as GameObject;
+                        spawnedObj.GetComponent<Player>().playerNumber = GameSettings.PlayerInfos[i].PlayerID;
                         tankName = "";
                     }
                 }
