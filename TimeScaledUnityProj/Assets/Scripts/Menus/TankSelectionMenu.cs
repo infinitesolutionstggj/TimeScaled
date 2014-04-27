@@ -66,13 +66,16 @@ public class TankSelectionMenu : MonoBehaviour
 			{
                 if (XCI.GetButtonDown(XboxButton.A, i+1))
                 {
+                    if (!temp.SelectionConfirmed)
+                    {
+                        temp.SelectionConfirmed = true;
+                    }
+                }
+                if (XCI.GetButtonDown(XboxButton.B, i + 1))
+                {
                     if (temp.SelectionConfirmed)
                     {
                         temp.SelectionConfirmed = false;
-                    }
-                    else
-                    {
-                        temp.SelectionConfirmed = true;
                     }
                 }
 
@@ -88,11 +91,9 @@ public class TankSelectionMenu : MonoBehaviour
                             nextSlot = tankMenuObjects.Count - 1;
                     } while (isOccupied(nextSlot));
 
-                    playerSelections[i] = nextSlot;
-                    if (temp.SelectionConfirmed)
+                    if (!temp.SelectionConfirmed)
                     {
-                        temp.SelectionConfirmed = false;
-                        selectors[i].GetComponentInChildren<ParticleSystem>().Clear();
+                        playerSelections[i] = nextSlot;
                     }
 
                     selectors[i].transform.position = tankMenuObjects[playerSelections[i]].Position;
@@ -113,11 +114,9 @@ public class TankSelectionMenu : MonoBehaviour
                             nextSlot = tankMenuObjects.Count - 1;
                     } while (isOccupied(nextSlot));
 
-                    playerSelections[i] = nextSlot;
-                    if (temp.SelectionConfirmed)
+                    if (!temp.SelectionConfirmed)
                     {
-                        temp.SelectionConfirmed = false;
-                        selectors[i].GetComponentInChildren<ParticleSystem>().Clear();
+                        playerSelections[i] = nextSlot;
                     }
 
                     selectors[i].transform.position = tankMenuObjects[playerSelections[i]].Position;
