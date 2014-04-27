@@ -14,6 +14,15 @@ public static class GameSettings
 
 	public static int MaxHistoryStates { get { return Mathf.CeilToInt(10 / FIXED_DELTA_TIME); } }
 
+	public enum TankType
+	{
+		EightBit,
+		Falchion,
+		Laser,
+		Lemun,
+		MetalSlug
+	};
+
 	public static void Pause()
 	{
 		Time.timeScale = 0;
