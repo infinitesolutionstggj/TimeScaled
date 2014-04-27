@@ -18,6 +18,9 @@ public class Player : HistoricalComponent<PlayerHS>
 {
 	public int playerNumber;
 	public ITankSpecial tankSpecial;
+	public float maxPlayerHealth = 50f;
+	public float PlayerHealth { get; protected set; }
+	public bool IsDead { get { return PlayerHealth <= 0; } }
 
 	public float linearDrag;
 	public float linearAcceleration;
@@ -71,6 +74,7 @@ public class Player : HistoricalComponent<PlayerHS>
 	protected override void Awake () 
 	{
 		base.Awake();
+		PlayerHealth = maxPlayerHealth;
 	}
 
 	void OnDestroy()
@@ -81,6 +85,27 @@ public class Player : HistoricalComponent<PlayerHS>
 	protected override void NewFixedUpdate()
 	{
 		base.NewFixedUpdate();
+
+		// Apply damage to player if in time bubbles
+		if (affectingTimeBubbles.Count > 0)
+		{
+			PlayerHealth -= GameSettings.BUBBLE_DAMAGE_PER_SECOND * affectingTimeBubbles.Count * Time.fixedDeltaTime;
+		}
+		// or heal the player if not in a time bubble
+		else
+		{
+			if (PlayerHealth < maxPlayerHealth)
+			{
+				PlayerHealth += GameSettings.HEALTH_REGEN_PER_SECOND * Time.fixedDeltaTime;
+				if (PlayerHealth > maxPlayerHealth)
+					PlayerHealth = maxPlayerHealth;
+			}
+		}
+		// Check to see if the player is dead
+		if(IsDead)
+		{
+			Destroy(this.gameObject);
+		}
 
 		currentSpeed = Mathf.Lerp(currentSpeed, 0, linearDrag * LocalFixedDeltaTime);
 		Thrust(XCI.GetAxis(XboxAxis.RightTrigger, playerNumber) - XCI.GetAxis(XboxAxis.LeftTrigger, playerNumber));

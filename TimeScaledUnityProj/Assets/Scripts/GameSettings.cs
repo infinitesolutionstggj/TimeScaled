@@ -12,6 +12,9 @@ public static class GameSettings
 	public const float MIN_SCREEN_BUFFER = 0.25f;	// The fraction of the left of the screen that forces the camera to move left/up
 	public const float MAX_SCREEN_BUFFER = 1 - MIN_SCREEN_BUFFER;	// Ditto for right/bottom side
 
+	public const float BUBBLE_DAMAGE_PER_SECOND = 5f;				// Amount of damage each bubble will deal to you per second
+	public const float HEALTH_REGEN_PER_SECOND = 8f;				// Amount of health the player will regenerate per second when not affected by time bubbles
+
 	public static int MaxHistoryStates { get { return Mathf.CeilToInt(10 / FIXED_DELTA_TIME); } }
 
 	public enum TankType
