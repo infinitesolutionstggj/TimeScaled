@@ -8,13 +8,21 @@ public class LevelManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        Player tempPlayer;
+        //Player tempPlayer;
 	    // spawn players
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn Point");
-        for(int i = 0; i < spawns.Length; i++)
+        GameObject playerPrefab = GameObject.Find("GameManager").GetComponent<GameManager>().playerPrefab;
+        if (playerPrefab)
         {
-            tempPlayer = Instantiate(GameObject.Find("GameManager").GetComponent<GameManager>().playerPrefab, spawns[i].transform.position, Quaternion.identity) as Player;
-            tempPlayer.playerNumber = i + 1;
+            Debug.Log("mooo   " + spawns.Length);
+            for (int i = 0; i < spawns.Length; i++)
+            {
+                Debug.Log("weeee    " + i);
+                //tempPlayer = Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity) as Player;
+                //tempPlayer.playerNumber = i + 1;
+                playerPrefab.GetComponent<Player>().playerNumber = i+1;
+                Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity);
+            }
         }
 	}
 	
