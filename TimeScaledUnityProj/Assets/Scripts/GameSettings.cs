@@ -21,7 +21,7 @@ public static class GameSettings
 		Laser,
 		Lemun,
 		MetalSlug
-	}
+	};
 
 	public static void Pause()
 	{

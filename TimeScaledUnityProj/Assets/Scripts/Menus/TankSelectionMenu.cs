@@ -12,11 +12,11 @@ public class TankSelectionMenu : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		tankModels[0] = Vector3(-3, 0, 0);
-		tankModels[1] = Vector3( 0, 0, 0);
-		tankModels[2] = Vector3( 3, 0, 0);
-		tankModels[3] = Vector3(-3, 0, -3);
-		tankModels[4] = Vector3(0, 0, -3);
+		tankModels[0] = new Vector3(-3, 0, 0);
+		tankModels[1] = new Vector3( 0, 0, 0);
+		tankModels[2] = new Vector3( 3, 0, 0);
+		tankModels[3] = new Vector3(-3, 0, -3);
+		tankModels[4] = new Vector3(0, 0, -3);
 	}
 	
 	// Update is called once per frame
@@ -26,22 +26,22 @@ public class TankSelectionMenu : MonoBehaviour
 		{
 			if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickX, i)) > 0.5)
 			{
-				playerSelectors[i-1].MoveDir(Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickX, i)), true);
+				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickX, i)), true);
 			}
 
 			if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickY, i)) > 0.5)
 			{
-				playerSelectors[i-1].MoveDir(Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickY, i)), false);
+				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickY, i)), false);
 			}
 
 			if (Mathf.Abs(XCI.GetAxis(XboxAxis.LeftStickX, i)) > 0.5)
 			{
-				playerSelectors[i-1].MoveDir(Mathf.Sign(XCI.GetAxis(XboxAxis.LeftStickX, i)), true);
+				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.LeftStickX, i)), true);
 			}
 
 			if (Mathf.Abs(XCI.GetAxis(XboxAxis.LeftStickY, i)) > 0.5)
 			{
-				playerSelectors[i-1].MoveDir(Mathf.Sign(XCI.GetAxis(XboxAxis.LeftStickY, i)), false);
+				playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.LeftStickY, i)), false);
 			}
 		}
 	}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TankSelector : MonoBehaviour
 {
-	public TankType type;
+	public GameSettings.TankType type;
 	public int PlayerID;
 	public Vector3 location;
 	public int selectedTank = 0;
@@ -21,7 +21,7 @@ public class TankSelector : MonoBehaviour
 	
 	}
 
-	void MoveDir(int dir, bool isHorizontal)
+	public void MoveDir(int dir, bool isHorizontal)
 	{
 		if (isHorizontal)
 		{
