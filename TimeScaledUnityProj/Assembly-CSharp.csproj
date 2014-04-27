@@ -70,7 +70,6 @@
      <Compile Include="Assets\Scripts\RectangleExt.cs" />
      <Compile Include="Assets\Scripts\ReverseBubble.cs" />
      <Compile Include="Assets\Scripts\ReverseBubbleSpawner.cs" />
-     <Compile Include="Assets\Scripts\Rigidbody2DExt.cs" />
      <Compile Include="Assets\Scripts\Tanks\Disruptor.cs" />
      <Compile Include="Assets\Scripts\Tanks\ITankSpecial.cs" />
      <Compile Include="Assets\Scripts\Tanks\Mammoth.cs" />
