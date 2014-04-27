@@ -134,6 +134,7 @@ public class Player : HistoricalComponent<PlayerHS>
 		// Check to see if the player is dead
 		if(IsDead)
 		{
+			AudioManager.PlayClipByName("PlayerDeath");
 			Destroy(this.gameObject);
 		}
 
@@ -201,16 +202,19 @@ public class Player : HistoricalComponent<PlayerHS>
 
 		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, TurretAngle).ToVector3(),
 			TurretAngle, shotSpeed, 2, shotStrength);
+		AudioManager.PlayClipByName("Shot 1");
 		CoolDownA = coolDownA;
 	}
 
 	protected TimeBubbleSpawner ShootFastBubble()
 	{
+		AudioManager.PlayClipByName("Shot 1");
 		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, TurretAngle).ToVector3(), false, TurretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
 	protected TimeBubbleSpawner ShootSlowBubble()
 	{
+		AudioManager.PlayClipByName("Shot 1");
 		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, TurretAngle).ToVector3(), true, TurretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
@@ -222,7 +226,10 @@ public class Player : HistoricalComponent<PlayerHS>
 		PlayerHealth -= damage;
 
 		if (IsDead)
+		{
+			AudioManager.PlayClipByName("Player Death");
 			Destroy(gameObject);
+		}
 	}
 
 	protected override PlayerHS GetCurrentHistoryState()
