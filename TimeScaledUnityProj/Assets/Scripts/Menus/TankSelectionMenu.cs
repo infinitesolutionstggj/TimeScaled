@@ -127,6 +127,21 @@ public class TankSelectionMenu : MonoBehaviour
 				}
 			}
 		}
+
+        int confirmedCount = 0;
+        for (int i = 0; i < playerSelections.Length; i++)
+        {
+            temp = selectors[i].GetComponent("MenuSelector") as MenuSelector;
+            if (temp.SelectionConfirmed)
+                confirmedCount++;
+        }
+
+        if (confirmedCount >= XCI.GetNumPluggedCtrlrs())
+        {
+            Debug.Log("Ready to Play");
+
+
+        }
 	}
 
 	IEnumerator SelectionWait(int playerIndex)
