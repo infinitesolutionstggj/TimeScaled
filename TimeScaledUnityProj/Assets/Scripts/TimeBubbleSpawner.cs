@@ -78,7 +78,7 @@ public class TimeBubbleSpawner : Bullet
 		transform.localScale = Vector3.one * baseScale * (1 + Quality);
 	}
 
-	public void Detonate()
+	public override void Detonate()
 	{
 		CheckLoadPrefab();
 
