@@ -16,6 +16,8 @@ public class PlayerHS
 
 public class Player : HistoricalComponent<PlayerHS>
 {
+	public float Radius;
+
 	public int playerNumber;
 	public ITankSpecial tankSpecial;
 	public float maxPlayerHealth = 50f;
@@ -26,6 +28,27 @@ public class Player : HistoricalComponent<PlayerHS>
 	public float linearAcceleration;
 	public float maxTurretSpeed;
 	public float maxTurnSpeed;
+
+	public float LinearAcceleration
+	{
+		get
+		{
+			if (tankSpecial is Prism && (tankSpecial as Prism).Boost)
+				return (tankSpecial as Prism).boostAccelerationMultiplier * linearAcceleration;
+
+			return linearAcceleration;
+		}
+	}
+	public float MaxTurnSpeed
+	{
+		get
+		{
+			if (tankSpecial is Prism && (tankSpecial as Prism).Boost)
+				return (tankSpecial as Prism).boostTurnSpeedMultiplier * maxTurnSpeed;
+
+			return maxTurnSpeed;
+		}
+	}
 
 	public float shotSpeed;
 
@@ -59,14 +82,6 @@ public class Player : HistoricalComponent<PlayerHS>
 				return false;
 
 			return base.IsRewinding;
-		}
-	}
-
-	public float Radius
-	{
-		get
-		{
-			return gameObject.GetComponent<CircleCollider2D>().radius;
 		}
 	}
 
@@ -112,7 +127,7 @@ public class Player : HistoricalComponent<PlayerHS>
 		if (Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickX, playerNumber)) > 0.1 || Mathf.Abs(XCI.GetAxis(XboxAxis.RightStickY, playerNumber)) > 0.1)
 			RotateTurretTo(MathLib.Atand2(XCI.GetAxis(XboxAxis.RightStickY, playerNumber), XCI.GetAxis(XboxAxis.RightStickX, playerNumber)));
 
-		bodyAngle -= maxTurnSpeed * currentSpeed * XCI.GetAxis(XboxAxis.LeftStickX, playerNumber) * LocalFixedDeltaTime;
+		bodyAngle -= MaxTurnSpeed * currentSpeed * XCI.GetAxis(XboxAxis.LeftStickX, playerNumber) * LocalFixedDeltaTime;
 		transform.position += new Vector2(MathLib.Cosd(bodyAngle), MathLib.Sind(bodyAngle)).ToVector3() * currentSpeed * LocalFixedDeltaTime;
 		transform.rotation = Quaternion.Euler(0, 0, bodyAngle);
 		transform.GetChild(0).rotation = Quaternion.Euler(0, 0, TurretAngle);
@@ -141,7 +156,7 @@ public class Player : HistoricalComponent<PlayerHS>
 	// Thrust forward/backward a given proportion of max speed
 	protected void Thrust(float amount)
 	{
-		currentSpeed += linearAcceleration * amount * LocalFixedDeltaTime;
+		currentSpeed += LinearAcceleration * amount * LocalFixedDeltaTime;
 	}
 
 	protected void RotateTurretTo(float angle)

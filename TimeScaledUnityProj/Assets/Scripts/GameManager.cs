@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		Instantiate(playerPrefab, new Vector3(0, 0, -2), Quaternion.identity);
+		Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 	}
 	
 	void Update()
