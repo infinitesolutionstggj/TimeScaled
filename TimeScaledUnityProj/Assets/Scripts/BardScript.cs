@@ -58,13 +58,13 @@ public class BardScript : MonoBehaviour
 				return;
 			}
 		}
-		throw new UnityException("PlayClipByName: A sound clip does not exist with name " + name + "!");
+		//throw new UnityException("PlayClipByName: A sound clip does not exist with name " + name + "!");
 	}
 
 	public void PlayClipByIndex(int index)
 	{
-		if (index >= soundClips.Length || index < 0)
-			throw new UnityException("PlayClipByIndex: Index out of range!");
+        if (index >= soundClips.Length || index < 0)
+            return;//throw new UnityException("PlayClipByIndex: Index out of range!");
 
 		audio.PlayOneShot(soundClips[index]);
 	}
@@ -87,13 +87,13 @@ public class BardScript : MonoBehaviour
 				return;
 			}
 		}
-		throw new UnityException("PlayBGMusicByName: A sound clip does not exist with name " + name + "!");
+		//throw new UnityException("PlayBGMusicByName: A sound clip does not exist with name " + name + "!");
 	}
 
 	public void PlayBGMusicByIndex(int index, bool looped = true)
 	{
 		if (index >= bgMusic.Length || index < 0)
-			throw new UnityException("PlayBGMusicByIndex: Index out of range!");
+            return;// throw new UnityException("PlayBGMusicByIndex: Index out of range!");
 
 		audio.Stop();
 		audio.clip = bgMusic[index];

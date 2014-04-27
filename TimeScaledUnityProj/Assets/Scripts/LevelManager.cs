@@ -66,8 +66,8 @@ public class LevelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        /*if (GameObject.FindObjectsOfType<Player>().Length < 2)
-            Application.LoadLevel("End");*/
+        if (GameObject.FindObjectsOfType<Player>().Length < 2)
+            Application.LoadLevel("End");
 
 	    /*foreach (Player p in GameObject.FindObjectsOfType<Player>())
         {
