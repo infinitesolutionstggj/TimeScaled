@@ -13,6 +13,7 @@ public class Bullet : HistoricalComponent<BulletHS>
 	public float angle;
 	public float speed;
 	public float Age { get; set; }
+	public float KnockbackStrength { get; set; }
 
 	public Vector3 Velocity
 	{
@@ -69,6 +70,15 @@ public class Bullet : HistoricalComponent<BulletHS>
 
 		if (lifeTime > 0 && Age >= lifeTime)
 			Destroy(gameObject);
+	}
+
+	void OnCollisionEnter(Collision col)
+	{
+		Player p = col.gameObject.GetComponent<Player>();
+		if (p) // bullet has collided with a player
+		{
+
+		}
 	}
 
 	public virtual void Detonate()
