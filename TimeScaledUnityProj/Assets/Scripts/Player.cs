@@ -28,7 +28,7 @@ public class Player : HistoricalComponent<PlayerHS>
 
 	private float currentSpeed;
 	private float bodyAngle;
-	private float turretAngle;
+	public float TurretAngle { get; private set; }
 
 	public TimeBubbleLimits timeBubbleLimits;
 	private TimeBubbleSpawner currentSlowShot;
@@ -69,13 +69,13 @@ public class Player : HistoricalComponent<PlayerHS>
 		bodyAngle -= maxTurnSpeed * currentSpeed * XCI.GetAxis(XboxAxis.LeftStickX, playerNumber) * LocalFixedDeltaTime;
 		transform.position += new Vector2(MathLib.Cosd(bodyAngle), MathLib.Sind(bodyAngle)).ToVector3() * currentSpeed * LocalFixedDeltaTime;
 		transform.rotation = Quaternion.Euler(0, 0, bodyAngle);
-		transform.GetChild(0).rotation = Quaternion.Euler(0, 0, turretAngle);
+		transform.GetChild(0).rotation = Quaternion.Euler(0, 0, TurretAngle);
 
 		if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
 			currentSlowShot = ShootSlowBubble();
 		if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
 			currentFastShot = ShootFastBubble();
-		if (XCI.GetButtonDown(XboxButton.A, playerNumber))
+		if (XCI.GetButtonDown(XboxButton.A, playerNumber) && CoolDownA <= 0)
 			ShootBullet();
 		if (XCI.GetButtonDown(XboxButton.X, playerNumber))
 			tankSpecial.SpecialX();
@@ -89,7 +89,7 @@ public class Player : HistoricalComponent<PlayerHS>
 		if (currentFastShot != null && XCI.GetButtonUp(XboxButton.RightBumper, playerNumber))
 			currentFastShot.Detonate();
 
-		coolDownA -= LocalFixedDeltaTime;
+		CoolDownA -= LocalFixedDeltaTime;
 	}
 
 	// Thrust forward/backward a given proportion of max speed
@@ -100,23 +100,24 @@ public class Player : HistoricalComponent<PlayerHS>
 
 	protected void RotateTurretTo(float angle)
 	{
-		turretAngle = Mathf.MoveTowardsAngle(turretAngle, angle, maxTurretSpeed * LocalFixedDeltaTime);
+		TurretAngle = Mathf.MoveTowardsAngle(TurretAngle, angle, maxTurretSpeed * LocalFixedDeltaTime);
 	}
 
 	protected void ShootBullet()
 	{
-		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, turretAngle).ToVector3(),
-			turretAngle, shotSpeed, 2);
+		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, TurretAngle).ToVector3(),
+			TurretAngle, shotSpeed, 2);
+		CoolDownA = coolDownA;
 	}
 
 	protected TimeBubbleSpawner ShootFastBubble()
 	{
-		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, turretAngle).ToVector3(), false, turretAngle, shotSpeed, 5, timeBubbleLimits);
+		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, TurretAngle).ToVector3(), false, TurretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
 	protected TimeBubbleSpawner ShootSlowBubble()
 	{
-		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, turretAngle).ToVector3(), true, turretAngle, shotSpeed, 5, timeBubbleLimits);
+		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, TurretAngle).ToVector3(), true, TurretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
 	protected override PlayerHS GetCurrentHistoryState()
@@ -126,7 +127,7 @@ public class Player : HistoricalComponent<PlayerHS>
 		output.rotation = transform.rotation;
 		output.currentSpeed = currentSpeed;
 		output.bodyAngle = bodyAngle;
-		output.turretAngle = turretAngle;
+		output.turretAngle = TurretAngle;
 		output.turretRotation = transform.GetChild(0).rotation;
 		return output;
 	}
@@ -137,7 +138,7 @@ public class Player : HistoricalComponent<PlayerHS>
 		transform.rotation = state.rotation;
 		currentSpeed = state.currentSpeed;
 		bodyAngle = state.bodyAngle;
-		turretAngle = state.turretAngle;
+		TurretAngle = state.turretAngle;
 		transform.GetChild(0).rotation = state.turretRotation;
 	}
 }
