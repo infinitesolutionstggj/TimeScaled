@@ -10,7 +10,7 @@ public class Bubble : MonoBehaviour
 	public static Material ReverseMat;
 
 	public float OuterRadius { get { return ((CircleCollider2D)collider2D).radius * Mathf.Max(transform.localScale.x, transform.localScale.y); } }
-	protected List<TimeScaledObject> affectedObjects;
+	public List<TimeScaledObject> AffectedObjects { get; private set; }
 	public float lifeSpan = 0f;
 
 	protected virtual void Awake()
@@ -22,7 +22,7 @@ public class Bubble : MonoBehaviour
 			ReverseMat = Resources.Load<Material>("ReverseBubbleMat");
 		}
 		collider2D.isTrigger = true;
-		affectedObjects = new List<TimeScaledObject>();
+		AffectedObjects = new List<TimeScaledObject>();
 	}
 
 	protected virtual void Start()
@@ -37,7 +37,7 @@ public class Bubble : MonoBehaviour
 
 		if (obj)
 		{
-			affectedObjects.Add(obj);
+			AffectedObjects.Add(obj);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class Bubble : MonoBehaviour
 
 		if (obj)
 		{
-			affectedObjects.Remove(obj);
+			AffectedObjects.Remove(obj);
 		}
 	}
 

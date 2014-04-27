@@ -41,7 +41,6 @@ public class BubbleDestroyer : Bullet
 	{
 		CheckLoadPrefab();
 
-		Debug.Log("Detonation");
 		foreach (var bubble in affectingTimeBubbles)
 			Destroy(bubble.gameObject);
 

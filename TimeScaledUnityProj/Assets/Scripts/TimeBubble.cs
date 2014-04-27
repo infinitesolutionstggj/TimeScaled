@@ -19,19 +19,16 @@ public class TimeBubble : Bubble
 	{
 		base.Start();
 
-		if (timeScaleMultiplier < 1)
-			renderer.material = SlowMat;
-		else
-			renderer.material = FastMat;
+		ResetMaterial();
 	}
 
 	void OnDestroy()
 	{
-		foreach (TimeScaledObject obj in affectedObjects)
+		foreach (TimeScaledObject obj in AffectedObjects)
 		{
 			obj.RemoveTimeBubble(this);
 		}
-		affectedObjects.Clear();
+		AffectedObjects.Clear();
 	}
 
 	void Update()
@@ -86,5 +83,13 @@ public class TimeBubble : Bubble
 			}
 
 		return t;
+	}
+
+	public void ResetMaterial()
+	{
+		if (timeScaleMultiplier < 1)
+			renderer.material = SlowMat;
+		else
+			renderer.material = FastMat;
 	}
 }

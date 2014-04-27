@@ -20,11 +20,11 @@ public class ReverseBubble : Bubble
 
 	void OnDestroy()
 	{
-		foreach (TimeScaledObject obj in affectedObjects)
+		foreach (TimeScaledObject obj in AffectedObjects)
 		{
 			obj.RemoveReverseBubble(this);
 		}
-		affectedObjects.Clear();
+		AffectedObjects.Clear();
 	}
 
 	protected override void OnTriggerEnter2D(Collider2D col)

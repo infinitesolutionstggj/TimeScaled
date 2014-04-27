@@ -85,7 +85,6 @@ public class Bullet : HistoricalComponent<BulletHS>
 
 	public virtual void Detonate()
 	{
-		Destroy(gameObject);
 	}
 
 	protected override BulletHS GetCurrentHistoryState()

@@ -214,6 +214,17 @@ public class Player : HistoricalComponent<PlayerHS>
 		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, TurretAngle).ToVector3(), true, TurretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
+	public void ApplyDamage(float damage)
+	{
+		if (damage <= 0)
+			return;
+		
+		PlayerHealth -= damage;
+
+		if (IsDead)
+			Destroy(gameObject);
+	}
+
 	protected override PlayerHS GetCurrentHistoryState()
 	{
 		PlayerHS output = new PlayerHS();
