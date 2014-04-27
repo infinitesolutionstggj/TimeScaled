@@ -56,12 +56,6 @@ public class Bullet : HistoricalComponent<BulletHS>
 		Age = 0;
 	}
 
-	protected virtual void OnDestroy()
-	{
-		if (!IsRewinding)
-			Detonate();
-	}
-
 	protected override void NewFixedUpdate()
 	{
 		base.NewFixedUpdate();

@@ -176,27 +176,32 @@ public class Player : HistoricalComponent<PlayerHS>
 			transform.position += new Vector2(MathLib.Cosd(bodyAngle), MathLib.Sind(bodyAngle)).ToVector3() * currentSpeed * LocalFixedDeltaTime;
 			transform.rotation = Quaternion.Euler(0, 0, bodyAngle);
 			transform.GetChild(0).rotation = Quaternion.Euler(0, 0, TurretAngle);
-
-			if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
-				CurrentSlowShot = ShootSlowBubble();
-			if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
-				CurrentFastShot = ShootFastBubble();
-			if (XCI.GetButtonDown(XboxButton.A, playerNumber) && CoolDownA <= 0)
-				ShootBullet();
-			if (XCI.GetButtonDown(XboxButton.X, playerNumber))
-				tankSpecial.SpecialX();
-			if (XCI.GetButtonDown(XboxButton.Y, playerNumber))
-				tankSpecial.SpecialY();
-			if (XCI.GetButtonDown(XboxButton.B, playerNumber))
-				tankSpecial.SpecialB();
 		}
+
+		CoolDownA -= LocalFixedDeltaTime;
+	}
+
+	protected override void NewUpdate()
+	{
+		base.NewUpdate();
+
+		if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
+			CurrentSlowShot = ShootSlowBubble();
+		if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
+			CurrentFastShot = ShootFastBubble();
+		if (XCI.GetButtonDown(XboxButton.A, playerNumber) && CoolDownA <= 0)
+			ShootBullet();
+		if (XCI.GetButtonDown(XboxButton.X, playerNumber))
+			tankSpecial.SpecialX();
+		if (XCI.GetButtonDown(XboxButton.Y, playerNumber))
+			tankSpecial.SpecialY();
+		if (XCI.GetButtonDown(XboxButton.B, playerNumber))
+			tankSpecial.SpecialB();
 
 		if (CurrentSlowShot != null && XCI.GetButtonUp(XboxButton.LeftBumper, playerNumber))
 			CurrentSlowShot.Detonate();
 		if (CurrentFastShot != null && XCI.GetButtonUp(XboxButton.RightBumper, playerNumber))
 			CurrentFastShot.Detonate();
-
-		CoolDownA -= LocalFixedDeltaTime;
 	}
 
 	// Thrust forward/backward a given proportion of max speed

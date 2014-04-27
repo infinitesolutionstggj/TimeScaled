@@ -53,14 +53,20 @@ public abstract class HistoricalComponent<T> : TimeScaledObject
 		}
 	}
 
-	protected sealed override void Update()
-	{
-		base.Update();
-	}
-
 	protected virtual void NewFixedUpdate()
 	{
 
+	}
+
+	protected sealed override void Update()
+	{
+		if (!IsRewinding)
+			NewUpdate();
+	}
+
+	protected virtual void NewUpdate()
+	{
+		base.Update();
 	}
 
 	protected abstract T GetCurrentHistoryState();
