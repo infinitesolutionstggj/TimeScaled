@@ -27,23 +27,24 @@ public class TankSelectionMenu : MonoBehaviour
         for (int i = 0; i < selectors.Length; i++)
         {
             selectors[i] = Instantiate(MenuSelectorPrefab, tankMenuObjects[i].Position, Quaternion.identity) as GameObject;
-            Debug.Log(selectors[i].GetComponentInChildren<Light>());
-
-          //  Light temp = selectors[i].transform.Find("Area Light") as Light;
 
             switch (i)
             {
                 case 0:
                     selectors[i].GetComponentInChildren<Light>().color = Color.blue;
+                    selectors[i].GetComponentInChildren<ParticleSystem>().startColor = Color.blue;
                     break;
                 case 1:
                     selectors[i].GetComponentInChildren<Light>().color = Color.red;
+                    selectors[i].GetComponentInChildren<ParticleSystem>().startColor = Color.red;
                     break;
                 case 2:
                     selectors[i].GetComponentInChildren<Light>().color = Color.green;
+                    selectors[i].GetComponentInChildren<ParticleSystem>().startColor = Color.green;
                     break;
                 case 3:
                     selectors[i].GetComponentInChildren<Light>().color = Color.yellow;
+                    selectors[i].GetComponentInChildren<ParticleSystem>().startColor = Color.yellow;
                     break;
                 default:
                     selectors[i].GetComponentInChildren<Light>().color = Color.white;
@@ -51,15 +52,30 @@ public class TankSelectionMenu : MonoBehaviour
             }
             playerSelections[i] = i;
         }
+
 	}
 
 	void Update ()
 	{
+        MenuSelector temp;
         int nextSlot = -1;
 		for (int i = 0; i < playerSelections.Length; i++)
 		{
+            temp = selectors[i].GetComponent("MenuSelector") as MenuSelector;
 			if(!selectorCoolDowns[i])
 			{
+                if (XCI.GetButtonDown(XboxButton.A, i+1))
+                {
+                    if (temp.SelectionConfirmed)
+                    {
+                        temp.SelectionConfirmed = false;
+                    }
+                    else
+                    {
+                        temp.SelectionConfirmed = true;
+                    }
+                }
+
 				if (XCI.GetAxis(XboxAxis.LeftStickX, i+1) > 0.5)
 				{
                     nextSlot = playerSelections[i];
@@ -73,6 +89,11 @@ public class TankSelectionMenu : MonoBehaviour
                     } while (isOccupied(nextSlot));
 
                     playerSelections[i] = nextSlot;
+                    if (temp.SelectionConfirmed)
+                    {
+                        temp.SelectionConfirmed = false;
+                        selectors[i].GetComponentInChildren<ParticleSystem>().Clear();
+                    }
 
                     selectors[i].transform.position = tankMenuObjects[playerSelections[i]].Position;
 
@@ -93,6 +114,11 @@ public class TankSelectionMenu : MonoBehaviour
                     } while (isOccupied(nextSlot));
 
                     playerSelections[i] = nextSlot;
+                    if (temp.SelectionConfirmed)
+                    {
+                        temp.SelectionConfirmed = false;
+                        selectors[i].GetComponentInChildren<ParticleSystem>().Clear();
+                    }
 
                     selectors[i].transform.position = tankMenuObjects[playerSelections[i]].Position;
 
