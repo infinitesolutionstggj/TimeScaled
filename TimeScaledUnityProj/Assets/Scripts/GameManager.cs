@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 		if (!AudioManager.IsPlaying)
 		{
 			AudioManager.PlayBGMusicByIndex(0);
+			AudioManager.SetCustomLooping(true, 42.857);
 		}
 	}
 

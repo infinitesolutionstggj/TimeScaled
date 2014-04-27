@@ -27,6 +27,11 @@ public static class AudioManager
 
 	public static bool IsPlaying { get { return Bard.IsPlaying; } }
 
+	public static void SetCustomLooping(bool looping, double timestamp)
+	{
+		Bard.SetCustomLooping(looping, timestamp);
+	}
+
 	public static void PlayClipByName(string name)
 	{
 		Bard.PlayClipByName(name);

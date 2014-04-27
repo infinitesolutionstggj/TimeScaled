@@ -8,6 +8,9 @@ public class BardScript : MonoBehaviour
 	public AudioClip[] bgMusic;
 
 	public bool IsPlaying { get { return audio.isPlaying; } }
+	public bool LoopBGMusic { get; private set; }
+	private double loopTimeStamp = 0;
+	private double nextEventTime = 0;
 
 	void Awake () 
 	{
@@ -20,10 +23,32 @@ public class BardScript : MonoBehaviour
 			Destroy(this.gameObject);
 	}
 
+	void Update()
+	{
+		if (LoopBGMusic)
+		{
+			if (IsPlaying && (audio.time + 0.25f > audio.clip.length))
+			{
+				int timeSampleTarget = audio.timeSamples - 1511953;
+				audio.timeSamples = timeSampleTarget;
+			}
+		}
+		if (IsPlaying)
+		{
+			Debug.Log(audio.time);
+		}
+	}
+
 	void OnDestroy()
 	{
 		if (Main == this)
 			Main = null;
+	}
+
+	public void SetCustomLooping(bool looping, double timestamp)
+	{
+		LoopBGMusic = looping;
+		loopTimeStamp = timestamp;
 	}
 
 	public void PlayClipByName(string name)
