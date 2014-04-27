@@ -1,16 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PrismHS : TankSpecialHS
 {
-
+	public float elapsedBoost;
+	public float elapsedBubbleTimeScale;
 }
 
 public class Prism : TankSpecial<PrismHS>
 {
+	public static List<Prism> All = new List<Prism>();
+
+	public float bubbleTimeScaleMultiplier;
+	public float bubbleTimeScaleDuration;
+	public bool BubbleTimeScale
+	{
+		get
+		{
+			return CurrentElapsedBubbleTimeScale < bubbleTimeScaleDuration;
+		}
+	}
+	public float CurrentElapsedBubbleTimeScale { get; private set; }
+
 	public float boostAccelerationMultiplier;
 	public float boostTurnSpeedMultiplier;
-
 	public float boostDuration;
 	public bool Boost
 	{
@@ -33,6 +47,21 @@ public class Prism : TankSpecial<PrismHS>
 	}
 	protected override void ExecuteSpecialB()
 	{
+		CurrentElapsedBubbleTimeScale = 0;
+	}
+
+	protected override void Awake()
+	{
+		base.Awake();
+
+		CurrentElapsedBoost = boostDuration;
+		CurrentElapsedBubbleTimeScale = bubbleTimeScaleDuration;
+		All.Add(this);
+	}
+
+	void OnDestroy()
+	{
+		All.Remove(this);
 	}
 
 	protected override void NewFixedUpdate()
@@ -40,6 +69,7 @@ public class Prism : TankSpecial<PrismHS>
 		base.NewFixedUpdate();
 
 		CurrentElapsedBoost += LocalFixedDeltaTime;
+		CurrentElapsedBubbleTimeScale += LocalFixedDeltaTime;
 	}
 
 	protected override PrismHS GetCurrentHistoryState()
@@ -49,6 +79,8 @@ public class Prism : TankSpecial<PrismHS>
 		output.coolDownX = input.coolDownX;
 		output.coolDownY = input.coolDownY;
 		output.coolDownB = input.coolDownB;
+		output.elapsedBoost = CurrentElapsedBoost;
+		output.elapsedBubbleTimeScale = CurrentElapsedBubbleTimeScale;
 		return output;
 	}
 

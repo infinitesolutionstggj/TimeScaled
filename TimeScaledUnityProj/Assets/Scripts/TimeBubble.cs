@@ -36,8 +36,6 @@ public class TimeBubble : Bubble
 
 	void Update()
 	{
-		/*if (Input.GetKeyDown(KeyCode.Space))
-			Destroy(this.gameObject);*/
 	}
 
 	protected override void OnDrawGizmos()
@@ -76,7 +74,17 @@ public class TimeBubble : Bubble
 		Vector2 position = (Vector2)transform.position;
 		Vector2 gameObjPos = (Vector2)gameObj.transform.position;
 		float t = Mathf.InverseLerp(OuterRadius, InnerRadius, Vector2.Distance(position, gameObjPos));
+		t = Mathf.Lerp(1.0f, timeScaleMultiplier, Mathf.Clamp01(t));
 
-		return Mathf.Lerp(1.0f, timeScaleMultiplier, Mathf.Clamp01(t));
+		foreach (var prism in Prism.All)
+			if (prism.BubbleTimeScale)
+			{
+				if (t < 1)
+					t /= prism.bubbleTimeScaleMultiplier;
+				else
+					t *= prism.bubbleTimeScaleMultiplier;
+			}
+
+		return t;
 	}
 }
