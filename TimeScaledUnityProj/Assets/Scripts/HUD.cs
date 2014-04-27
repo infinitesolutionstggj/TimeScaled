@@ -70,6 +70,9 @@ public class HUD : MonoBehaviour
 	{
 		foreach (var player in players)
 		{
+			if (player == null)
+				continue;
+
 			GUI.DrawTexture(ScreenRect[player.playerNumber - 1], Background);
 
 			if (player.CoolDownA > 0)

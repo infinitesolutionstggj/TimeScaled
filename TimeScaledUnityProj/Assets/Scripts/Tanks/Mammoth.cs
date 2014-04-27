@@ -33,21 +33,21 @@ public class Mammoth : TankSpecial<MammothHS>
 		TimeBubbleLimits tbl = ClonePlayerTBL();
 		tbl.minRadius *= radiusMultiplier;
 		tbl.maxRadius *= radiusMultiplier;
-		TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + TimeBubbleSpawner.Radius, Player.TurretAngle).ToVector3(), isSlowBubble, Player.TurretAngle, Player.shotSpeed, 1, tbl);
+		StartCoroutine(PopAtPeak(TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + TimeBubbleSpawner.Radius, Player.TurretAngle).ToVector3(), isSlowBubble, Player.TurretAngle, Player.shotSpeed, 2, tbl)));
 	}
 	protected override void ExecuteSpecialY()
 	{
 		TimeBubbleLimits tbl = ClonePlayerTBL();
 		tbl.minLifeSpan *= lifeSpanMultiplier;
 		tbl.maxLifeSpan *= lifeSpanMultiplier;
-		TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + TimeBubbleSpawner.Radius, Player.TurretAngle).ToVector3(), isSlowBubble, Player.TurretAngle, Player.shotSpeed, 1, tbl);
+		StartCoroutine(PopAtPeak(TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + TimeBubbleSpawner.Radius, Player.TurretAngle).ToVector3(), isSlowBubble, Player.TurretAngle, Player.shotSpeed, 2, tbl)));
 	}
 	protected override void ExecuteSpecialB()
 	{
 		TimeBubbleLimits tbl = ClonePlayerTBL();
 		tbl.minTimeScaleMultiplier *= timeScaleMultiplier;
 		tbl.maxTimeScaleMultiplier *= timeScaleMultiplier;
-		TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + TimeBubbleSpawner.Radius, Player.TurretAngle).ToVector3(), isSlowBubble, Player.TurretAngle, Player.shotSpeed, 1, tbl);
+		StartCoroutine(PopAtPeak(TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + TimeBubbleSpawner.Radius, Player.TurretAngle).ToVector3(), isSlowBubble, Player.TurretAngle, Player.shotSpeed, 2, tbl)));
 	}
 
 	protected override MammothHS GetCurrentHistoryState()
@@ -79,5 +79,12 @@ public class Mammoth : TankSpecial<MammothHS>
 		tbl.minTimeScaleMultiplier = Player.timeBubbleLimits.minTimeScaleMultiplier;
 		tbl.maxTimeScaleMultiplier = Player.timeBubbleLimits.maxTimeScaleMultiplier;
 		return tbl;
+	}
+
+	private IEnumerator PopAtPeak(TimeBubbleSpawner spawner)
+	{
+		while (spawner.Age < 1)
+			yield return null;
+		spawner.Detonate();
 	}
 }
