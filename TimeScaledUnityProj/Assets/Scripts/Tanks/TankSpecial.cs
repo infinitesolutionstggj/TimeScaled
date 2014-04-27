@@ -13,6 +13,13 @@ public abstract class TankSpecial<T> : HistoricalComponent<T>, ITankSpecial wher
 	public Player Player { get; private set; }
 
 	public Texture2D hudTextOverlay;
+	public Texture2D TextOverlay
+	{
+		get
+		{
+			return hudTextOverlay;
+		}
+	}
 
 	public float coolDownX;
 	public float coolDownY;

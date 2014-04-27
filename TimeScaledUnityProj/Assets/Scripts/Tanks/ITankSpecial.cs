@@ -7,4 +7,9 @@ public interface ITankSpecial
 	void SpecialX();
 	void SpecialY();
 	void SpecialB();
+
+	Texture2D TextOverlay { get; }
+	float CoolDownX { get; }
+	float CoolDownY { get; }
+	float CoolDownB { get; }
 }

@@ -11,6 +11,20 @@ public class HUD : MonoBehaviour
 	public static Texture2D LockY;
 	public static Texture2D LockB;
 
+	public static void CheckLoadTextures()
+	{
+		if (Background == null)
+			Background = Resources.Load<Texture2D>("HUD_BG");
+		if (LockA == null)
+			LockA = Resources.Load<Texture2D>("HUD_LockA");
+		if (LockX == null)
+			LockX = Resources.Load<Texture2D>("HUD_LockX");
+		if (LockY == null)
+			LockY = Resources.Load<Texture2D>("HUD_LockY");
+		if (LockB == null)
+			LockB = Resources.Load<Texture2D>("HUD_LockB");
+	}
+
 	public Player[] players;
 
 	public float screenEdgeBuffer;
@@ -48,13 +62,26 @@ public class HUD : MonoBehaviour
 			ScreenRect[i].width = playerCardWidth;
 			ScreenRect[i].height = playerCardHeight;
 		}
+
+		CheckLoadTextures();
 	}
 
 	public void OnGUI()
 	{
 		foreach (var player in players)
 		{
+			GUI.DrawTexture(ScreenRect[player.playerNumber - 1], Background);
 
+			if (player.CoolDownA > 0)
+				GUI.DrawTexture(ScreenRect[player.playerNumber - 1], LockA);
+			if (player.tankSpecial.CoolDownX > 0)
+				GUI.DrawTexture(ScreenRect[player.playerNumber - 1], LockX);
+			if (player.tankSpecial.CoolDownY > 0)
+				GUI.DrawTexture(ScreenRect[player.playerNumber - 1], LockY);
+			if (player.tankSpecial.CoolDownB > 0)
+				GUI.DrawTexture(ScreenRect[player.playerNumber - 1], LockB);
+			
+			GUI.DrawTexture(ScreenRect[player.playerNumber - 1], player.tankSpecial.TextOverlay);
 		}
 	}
 }
