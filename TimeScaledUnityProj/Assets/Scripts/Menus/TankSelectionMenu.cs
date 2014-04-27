@@ -42,6 +42,9 @@ public class TankSelectionMenu : MonoBehaviour
                 case 2:
                     selectors[i].GetComponentInChildren<Light>().color = Color.green;
                     break;
+                case 3:
+                    selectors[i].GetComponentInChildren<Light>().color = Color.yellow;
+                    break;
                 default:
                     selectors[i].GetComponentInChildren<Light>().color = Color.white;
                     break;
