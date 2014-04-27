@@ -5,8 +5,10 @@ using XboxCtrlrInput;
 
 public class TankSelectionMenu : MonoBehaviour
 {
-	List<MenuObject> tankMenuObjects = new List<MenuObject>();
+	public List<MenuObject> tankMenuObjects = new List<MenuObject>();
 
+    GameObject[] selectors = new GameObject[4];
+    public GameObject MenuSelectorPrefab;
 	int[] playerSelections = new int[4];
 
 	bool[] selectorCoolDowns = new bool[4];
@@ -20,34 +22,37 @@ public class TankSelectionMenu : MonoBehaviour
 			selectorCoolDowns[i] = false;
 	}
 
-	void Start () 
+    void Start() 
 	{
-		GameObject[] foundObjects;
-		foundObjects = GameObject.FindGameObjectsWithTag("MenuObject");
-
-		for(int i = 0; i < foundObjects.Length; i++)
-		{
-			if(foundObjects[i].GetComponent<MenuObject>() != null && foundObjects[i].activeInHierarchy)
-			{
-				tankMenuObjects.Add(foundObjects[i].GetComponent<MenuObject>());
-			}
-		}
+        for (int i = 0; i < selectors.Length; i++)
+        {
+            selectors[i] = Instantiate(MenuSelectorPrefab, tankMenuObjects[i].Position, Quaternion.identity) as GameObject;
+            playerSelections[i] = i;
+        }
 	}
 
 	void Update ()
 	{
+        int nextSlot = -1;
 		for (int i = 0; i < playerSelections.Length; i++)
 		{
 			if(!selectorCoolDowns[i])
 			{
 				if (XCI.GetAxis(XboxAxis.LeftStickX, i+1) > 0.5)
 				{
-					//playerSelectors[i-1].MoveDir((int)Mathf.Sign(XCI.GetAxis(XboxAxis.RightStickX, i)), true);
-					playerSelections[i]++;
-					if(playerSelections[i] >= tankMenuObjects.Count)
-						playerSelections[i] = 0;
-					else if(playerSelections[i] < 0)
-						playerSelections[i] = tankMenuObjects.Count - 1;
+                    nextSlot = playerSelections[i];
+                    do
+                    {
+                        nextSlot++;
+                        if (nextSlot >= tankMenuObjects.Count)
+                            nextSlot = 0;
+                        else if (nextSlot < 0)
+                            nextSlot = tankMenuObjects.Count - 1;
+                    } while (isOccupied(nextSlot));
+
+                    playerSelections[i] = nextSlot;
+
+                    selectors[i].transform.position = tankMenuObjects[playerSelections[i]].Position;
 
 					selectorCoolDowns[i] = true;
 					StartCoroutine(SelectionWait(i));
@@ -55,11 +60,19 @@ public class TankSelectionMenu : MonoBehaviour
 				}
 				else if(XCI.GetAxis(XboxAxis.LeftStickX, i+1) < -0.5)
 				{
-					playerSelections[i]--;
-					if(playerSelections[i] >= tankMenuObjects.Count)
-						playerSelections[i] = 0;
-					else if(playerSelections[i] < 0)
-						playerSelections[i] = tankMenuObjects.Count - 1;
+                    nextSlot = playerSelections[i];
+                    do
+                    {
+                        nextSlot--;
+                        if (nextSlot >= tankMenuObjects.Count)
+                            nextSlot = 0;
+                        else if (nextSlot < 0)
+                            nextSlot = tankMenuObjects.Count - 1;
+                    } while (isOccupied(nextSlot));
+
+                    playerSelections[i] = nextSlot;
+
+                    selectors[i].transform.position = tankMenuObjects[playerSelections[i]].Position;
 
 					selectorCoolDowns[i] = true;
 					StartCoroutine(SelectionWait(i));
@@ -78,4 +91,14 @@ public class TankSelectionMenu : MonoBehaviour
 
 		selectorCoolDowns[playerIndex] = false;
 	}
+
+    bool isOccupied(int idx)
+    {
+        for (int i = 0; i < playerSelections.Length; i++)
+        {
+            if (playerSelections[i] == idx) return true;
+        }
+
+        return false;
+    }
 }
