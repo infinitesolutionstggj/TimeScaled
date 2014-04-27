@@ -13,6 +13,12 @@ public class TimeBubble : Bubble
 		base.Awake();
 
 		innerRadiusPercent = Mathf.Clamp01(innerRadiusPercent);
+	}
+
+	protected override void Start()
+	{
+		base.Start();
+
 		if (timeScaleMultiplier < 1)
 			renderer.material = SlowMat;
 		else

@@ -24,23 +24,23 @@ public class Bullet : HistoricalComponent<BulletHS>
 		{
 			CheckLoadPrefab();
 
-			return prefab.gameObject.GetComponent<CircleCollider2D>().radius;
+			return prefabBullet.gameObject.GetComponent<CircleCollider2D>().radius;
 		}
 	}
 
-	public static Bullet prefab;
+	public static Bullet prefabBullet;
 
 	public static void CheckLoadPrefab()
 	{
-		if (prefab == null)
-			prefab = Resources.Load<GameObject>("Bullet").GetComponent<Bullet>();
+		if (prefabBullet == null)
+			prefabBullet = Resources.Load<GameObject>("Bullet").GetComponent<Bullet>();
 	}
 
 	public static Bullet Spawn(Vector3 position, float angle, float speed, float lifeTime)
 	{
 		CheckLoadPrefab();
 
-		Bullet output = Instantiate(prefab, position, Quaternion.Euler(0, 0, angle)) as Bullet;
+		Bullet output = Instantiate(prefabBullet, position, Quaternion.Euler(0, 0, angle)) as Bullet;
 		output.speed = speed;
 		output.angle = angle;
 		output.lifeTime = lifeTime;

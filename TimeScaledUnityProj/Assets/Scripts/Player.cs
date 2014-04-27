@@ -10,9 +10,6 @@ public class PlayerHS
 	public float bodyAngle;
 	public float turretAngle;
 	public Quaternion turretRotation;
-	public SpecialAbility specialA;
-	public SpecialAbility specialB;
-	public SpecialAbility specialC;
 }
 
 public class Player : HistoricalComponent<PlayerHS>
@@ -30,18 +27,9 @@ public class Player : HistoricalComponent<PlayerHS>
 	private float bodyAngle;
 	private float turretAngle;
 
-	public float sweetSpotAge;
-	public float sweetSpotSensitivity;
-	public float minSize;
-	public float maxSize;
-	public float minInnerRadiusPercent;
-	public float maxInnerRadiusPercent;
-	public float minTimeScale;
-	public float maxTimeScale;
-
-	public SpecialAbility specialA;
-	public SpecialAbility specialB;
-	public SpecialAbility specialC;
+	public TimeBubbleLimits timeBubbleLimits;
+	private TimeBubbleSpawner currentSlowShot;
+	private TimeBubbleSpawner currentFastShot;
 
 	public float Radius
 	{
@@ -78,6 +66,15 @@ public class Player : HistoricalComponent<PlayerHS>
 
 		if (XCI.GetButtonDown(XboxButton.A, playerNumber))
 			ShootBullet();
+		if (XCI.GetButtonDown(XboxButton.LeftBumper, playerNumber))
+			currentSlowShot = ShootSlowBubble();
+		if (XCI.GetButtonDown(XboxButton.RightBumper, playerNumber))
+			currentFastShot = ShootFastBubble();
+
+		if (currentSlowShot != null && XCI.GetButtonUp(XboxButton.LeftBumper, playerNumber))
+			currentSlowShot.Detonate();
+		if (currentFastShot != null && XCI.GetButtonUp(XboxButton.RightBumper, playerNumber))
+			currentFastShot.Detonate();
 	}
 
 	// Thrust forward/backward a given proportion of max speed
@@ -95,6 +92,16 @@ public class Player : HistoricalComponent<PlayerHS>
 	{
 		Bullet.Spawn(transform.position + MathLib.FromPolar(Radius + Bullet.Radius, turretAngle).ToVector3(),
 			turretAngle, shotSpeed, 2);
+	}
+
+	protected TimeBubbleSpawner ShootFastBubble()
+	{
+		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, turretAngle).ToVector3(), false, turretAngle, shotSpeed, 5, timeBubbleLimits);
+	}
+
+	protected TimeBubbleSpawner ShootSlowBubble()
+	{
+		return TimeBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Radius + TimeBubbleSpawner.Radius, turretAngle).ToVector3(), true, turretAngle, shotSpeed, 5, timeBubbleLimits);
 	}
 
 	protected override PlayerHS GetCurrentHistoryState()
