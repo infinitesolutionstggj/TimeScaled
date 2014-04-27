@@ -8,26 +8,25 @@ public class CryoHS : TankSpecialHS
 
 public class Cryo : TankSpecial<CryoHS>
 {
-	public ReverseBubbleDesc reverseDesc;
-	public float pulsePower;
-	public float knockBackPower;
-	public float missileSpeed;
-	public float missileLifeTime;
+	public float stasisDuration;
+	public float freezeDuration;
+	public float projectileDuration;
+	public float projectileLifeSpan;
+	public float projectileSpeed;
 
 	protected override void ExecuteSpecialX()
 	{
-		Bullet.Spawn(transform.position + MathLib.FromPolar(Player.Radius + Bullet.Radius, Player.TurretAngle).ToVector3(),
-			Player.TurretAngle, missileSpeed, missileLifeTime, knockBackPower);
+		foreach (var player in Player.All)
+			player.FreezeFor(freezeDuration);
 	}
 	protected override void ExecuteSpecialY()
 	{
-		ReverseBubbleSpawner.Spawn(transform.position + MathLib.FromPolar(Player.Radius + ReverseBubbleSpawner.Radius, Player.TurretAngle).ToVector3(),
-			Player.TurretAngle, Player.shotSpeed, reverseDesc);
+		FreezeMissile.Spawn(transform.position + MathLib.FromPolar(Player.Radius + ReverseBubbleSpawner.Radius, Player.TurretAngle).ToVector3(),
+			Player.TurretAngle, Player.shotSpeed, projectileLifeSpan, projectileDuration);
 	}
 	protected override void ExecuteSpecialB()
 	{
-		foreach (var player in Player.All)
-			player.ApplyKnockback(player.transform.position - transform.position, pulsePower, GameSettings.PLAYER_KNOCKBACK_DURATION);
+		Player.FreezeFor(stasisDuration);
 	}
 
 	protected override CryoHS GetCurrentHistoryState()
