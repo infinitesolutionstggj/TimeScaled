@@ -22,7 +22,7 @@ public class PolarityReverser : Bullet
 		PolarityReverser output = Instantiate(PrefabReverser, position, Quaternion.Euler(0, 0, angle)) as PolarityReverser;
 		output.speed = speed;
 		output.angle = angle;
-		output.lifeTime = 2;
+		output.lifeTime = 3;
 		return output;
 	}
 
@@ -35,6 +35,9 @@ public class PolarityReverser : Bullet
 	protected override void NewFixedUpdate()
 	{
 		base.NewFixedUpdate();
+
+		if (Age >= 2)
+			Detonate();
 	}
 
 	public override void Detonate()

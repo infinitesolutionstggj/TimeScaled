@@ -24,7 +24,7 @@ public class ExtraDamageMarker : Bullet
 		ExtraDamageMarker output = Instantiate(PrefabMarker, position, Quaternion.Euler(0, 0, angle)) as ExtraDamageMarker;
 		output.speed = speed;
 		output.angle = angle;
-		output.lifeTime = 2;
+		output.lifeTime = 3;
 		output.owner = owner;
 		return output;
 	}
@@ -38,6 +38,9 @@ public class ExtraDamageMarker : Bullet
 	protected override void NewFixedUpdate()
 	{
 		base.NewFixedUpdate();
+
+		if (Age >= 2)
+			Detonate();
 	}
 
 	public override void Detonate()

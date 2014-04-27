@@ -30,7 +30,7 @@ public class ReverseBubbleSpawner : Bullet
 		ReverseBubbleSpawner output = Instantiate(PrefabSpawner, position, Quaternion.Euler(0, 0, angle)) as ReverseBubbleSpawner;
 		output.speed = speed;
 		output.angle = angle;
-		output.lifeTime = 1;
+		output.lifeTime = 2;
 		output.desc = desc;
 		return output;
 	}
@@ -48,6 +48,9 @@ public class ReverseBubbleSpawner : Bullet
 	protected override void NewFixedUpdate()
 	{
 		base.NewFixedUpdate();
+
+		if (Age >= 1)
+			Detonate();
 	}
 
 	public override void Detonate()
