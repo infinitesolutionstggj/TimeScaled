@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
         GameObject playerPrefab = null;
         GameObject spawnedObj = null;
 
+        HUD.Instance.players = new Player[4];
+
         //if (GameManager.Main)
             //playerPrefab = GameManager.Main.playerPrefab;
 
@@ -56,6 +58,10 @@ public class LevelManager : MonoBehaviour
                         playerPrefab = Resources.Load(tankName) as GameObject;
                         spawnedObj = Instantiate(playerPrefab, spawns[i].transform.position, Quaternion.identity) as GameObject;
                         spawnedObj.GetComponent<Player>().playerNumber = GameSettings.PlayerInfos[i].PlayerID;
+                        if (HUD.Instance != null)
+                        {
+                            HUD.Instance.players[i] = spawnedObj.GetComponent<Player>();
+                        }
                         tankName = "";
                     }
                 }
